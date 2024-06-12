@@ -1,0 +1,345 @@
+
+  Generates Next Alphabet Code
+
+  [![NPM Version][npm-version-image]][npm-url]
+  [![NPM Install Size][npm-install-size-image]][npm-install-size-url]
+  [![NPM Downloads][npm-downloads-image]][npm-downloads-url]
+
+```ts
+// ./models/todo.model.ts
+import { ICoreLiteModel } from 'express-mongo-model';
+
+export interface ITodoLiteModel extends ICoreLiteModel {
+  title: string;
+}
+
+// ./data/todo.data.ts
+import { CollectionSchemaBuilder } from 'express-mongo-model';
+import { ITodoLiteModel } from "../models/todo.model.ts";
+
+const docSchema = new CollectionSchemaBuilder<ITodoLiteModel>('todos');
+docSchema.build(({
+  title: { type: String, required: true }
+}));
+const dataModel = docSchema.getDataModel();
+export {dataModel as TodoDataModel};
+
+// ./ops/todo.ops.ts
+import { MongoCRUDOperations, ICoreOperations } from 'express-mongo-model';
+import { ITodoLiteModel } from "../models/todo.model.ts";
+import { TodoDataModel } from "../data/todo.data.ts";
+
+export interface ITodoOperations extends ICoreOperations<ITodoLiteModel> { }
+
+export class TodoOperations extends MongoCRUDOperations<ITodoLiteModel> implements ITodoOperations {
+  constructor() {
+    super(TodoDataModel);
+  }
+}
+
+// ./routes/todo.route.ts
+import { RESTRouteBuilder } from 'express-mongo-model';
+import { TodoOperations } from "../ops/Todo.ops.ts";
+
+const ROUTE_PREFIX = '/api/todos';
+
+const todoOps = new TodoOperations();
+const todoRoute = new RESTRouteBuilder(ROUTE_PREFIX, todoOps);
+const router = todoRoute.buildCRUDRoutes();
+
+export { router as TodosRouter };
+
+// index.ts
+import express, { Application } from "express";
+import mongoose from "mongoose";
+import { json } from "body-parser";
+import { TodoRouter } from "./routes/todo.route";
+const dotenv = require("dotenv");
+
+dotenv.config();
+const TRN_DB_CONNECT: string = process.env.TRN_DB_CONNECT ?? "";
+const PORT = parseInt(process.env.PORT ?? "8000");
+
+const app: Application = express();
+app.use(json());
+app.use(express.static("public"));
+
+app.use(function (req, res, next) {
+  req.headers["tenantId"] = "";
+  req.headers["userId"] = "";
+  if (!req.headers.authorization) {
+  } else {
+  }
+
+  next();
+});
+
+// Adding Todo Router
+app.use(TodoRouter);
+
+mongoose
+  .connect(TRN_DB_CONNECT, {})
+  .then(() => {
+    console.log("connected to database");
+  })
+  .catch((ex) => {
+    console.log("failed to connect database", ex);
+  });
+
+app.listen(PORT, () => {
+  console.log(`server is listening on port ${PORT}`);
+});
+
+```
+
+## Installation
+
+Installation is done using the
+[`npm install` command](https://docs.npmjs.com/getting-started/installing-npm-packages-locally):
+
+```console
+$ npm install express-mongo-model
+```
+```json
+{
+	"info": {
+		"_postman_id": "0a0b1bc4-a5d4-4172-a571-e7b4bec18687",
+		"name": "todos",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "24242163"
+	},
+	"item": [
+		{
+			"name": "todo-apis",
+			"item": [
+				{
+					"name": "todos-get",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/todos",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"todos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "todos-get-one",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/todos/6669cd72881737533cb23d91",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"todos",
+								"6669cd72881737533cb23d91"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "todos-get-page",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/todos/page?page=0&limit=2&sort=title:asc",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"todos",
+								"page"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "limit",
+									"value": "2"
+								},
+								{
+									"key": "sort",
+									"value": "title:asc"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "todos-post",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "        {\n            \"title\": \"Welcome To Mongo Model APIs\"\n        }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/todos/6669cd72881737533cb23d91",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"todos",
+								"6669cd72881737533cb23d91"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "todos-put",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Welcome To Mongo Model APIS\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/todos",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"todos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "todos-delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/todos/6669ce0a881737533cb23d9a",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"todos",
+								"6669ce0a881737533cb23d9a"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "tenants-put",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"tenantName\": \"Tenant1\",\n    \"locale\": \"en-US\",\n    \"currency\": \"USD\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/tenants",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"tenants"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "users-put",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"firstName\": \"Shiju\",\n    \"lastName\": \"Madamchery\",\n    \"phone\": \"+91 9686622751\",\n    \"userRole\": \"superadmin\",\n    \"userName\": \"shijuprakasan@gmail.com\",\n    \"email\": \"shijuprakasan@gmail.com\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/users/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"users",
+						"register"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
+```
+## Features
+

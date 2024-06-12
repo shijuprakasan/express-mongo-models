@@ -1,0 +1,31 @@
+{
+  "name": "express-mongo-model",
+  "version": "1.0.7",
+  "description": "Express Mongo Model",
+  "main": "index",
+  "scripts": {
+    "build": "tsc",
+    "test": "tsc && node ./build/server-todo.js",
+    "format": "prettier --write \"src/**/*.{js,jsx}\""
+  },
+  "keywords": [
+    "mongo",
+    "model",
+    "orm",
+    "api",
+    "auto",
+    "crud",
+    "rest"
+  ],
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "ts-node": "^10.9.2",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.4.5"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "mongoose": "^8.4.0"
+  }
+}

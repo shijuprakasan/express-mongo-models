@@ -1,0 +1,1 @@
+{"version":3,"file":"tenant.route.js","sourceRoot":"","sources":["../../src/routes/tenant.route.ts"],"names":[],"mappings":";;;AAAA,0DAA6D;AAC7D,gCAA0C;AAE1C,MAAM,YAAY,GAAG,cAAc,CAAC;AAEpC,MAAM,SAAS,GAAG,IAAI,sBAAgB,EAAE,CAAC;AAEzC,MAAM,WAAW,GAAG,IAAI,6BAAgB,CAAC,YAAY,EAAE,SAAS,CAAC,CAAC;AAClE,MAAM,MAAM,GAAG,WAAW,CAAC,eAAe,EAAE,CAAC;AAE1B,+BAAa"}
