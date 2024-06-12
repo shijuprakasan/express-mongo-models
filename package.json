@@ -1,6 +1,6 @@
 {
   "name": "express-mongo-model",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "Express Mongo Model",
   "main": "index",
   "scripts": {

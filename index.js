@@ -1,3 +1,3 @@
 'use strict';
 
-module.exports = require('./dist/index');
+module.exports = require('./build');

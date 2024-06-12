@@ -6,40 +6,40 @@
   [![NPM Downloads][npm-downloads-image]][npm-downloads-url]
 
 ```ts
-// ./models/todo.model.ts
+// ./todo.model.ts
 import { ICoreLiteModel } from 'express-mongo-model';
 
-export interface ITodoLiteModel extends ICoreLiteModel {
+export interface ITodoModel extends ICoreLiteModel {
   title: string;
 }
 
-// ./data/todo.data.ts
+// ./todo.data.ts
 import { CollectionSchemaBuilder } from 'express-mongo-model';
-import { ITodoLiteModel } from "../models/todo.model.ts";
+import { ITodoModel } from "./todo.model.ts";
 
-const docSchema = new CollectionSchemaBuilder<ITodoLiteModel>('todos');
+const docSchema = new CollectionSchemaBuilder<ITodoModel>('todos');
 docSchema.build(({
   title: { type: String, required: true }
 }));
 const dataModel = docSchema.getDataModel();
 export {dataModel as TodoDataModel};
 
-// ./ops/todo.ops.ts
+// ./todo.ops.ts
 import { MongoCRUDOperations, ICoreOperations } from 'express-mongo-model';
-import { ITodoLiteModel } from "../models/todo.model.ts";
-import { TodoDataModel } from "../data/todo.data.ts";
+import { ITodoModel } from "./todo.model.ts";
+import { TodoDataModel } from "./todo.data.ts";
 
-export interface ITodoOperations extends ICoreOperations<ITodoLiteModel> { }
+export interface ITodoOperations extends ICoreOperations<ITodoModel> { }
 
-export class TodoOperations extends MongoCRUDOperations<ITodoLiteModel> implements ITodoOperations {
+export class TodoOperations extends MongoCRUDOperations<ITodoModel> implements ITodoOperations {
   constructor() {
     super(TodoDataModel);
   }
 }
 
-// ./routes/todo.route.ts
+// ./todo.route.ts
 import { RESTRouteBuilder } from 'express-mongo-model';
-import { TodoOperations } from "../ops/Todo.ops.ts";
+import { TodoOperations } from "./todo.ops.ts";
 
 const ROUTE_PREFIX = '/api/todos';
 
@@ -49,11 +49,11 @@ const router = todoRoute.buildCRUDRoutes();
 
 export { router as TodosRouter };
 
-// index.ts
+// ./index.ts
 import express, { Application } from "express";
 import mongoose from "mongoose";
 import { json } from "body-parser";
-import { TodoRouter } from "./routes/todo.route";
+import { TodosRouter } from "./todo.route";
 const dotenv = require("dotenv");
 
 dotenv.config();
@@ -62,20 +62,7 @@ const PORT = parseInt(process.env.PORT ?? "8000");
 
 const app: Application = express();
 app.use(json());
-app.use(express.static("public"));
-
-app.use(function (req, res, next) {
-  req.headers["tenantId"] = "";
-  req.headers["userId"] = "";
-  if (!req.headers.authorization) {
-  } else {
-  }
-
-  next();
-});
-
-// Adding Todo Router
-app.use(TodoRouter);
+app.use(TodosRouter);
 
 mongoose
   .connect(TRN_DB_CONNECT, {})
@@ -87,7 +74,7 @@ mongoose
   });
 
 app.listen(PORT, () => {
-  console.log(`server is listening on port ${PORT}`);
+    console.log(`server is listening on port ${PORT}`);
 });
 
 ```
