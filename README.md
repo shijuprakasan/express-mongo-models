@@ -100,6 +100,7 @@ Installation is done using the
 ```console
 $ npm install express-mongo-model
 ```
+## Testing (Postman)
 ```json
 {
 	"info": {
