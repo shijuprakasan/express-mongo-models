@@ -1,7 +1,7 @@
 {
   "name": "express-mongo-model",
-  "version": "1.0.13",
-  "description": "Express Mongo Model",
+  "version": "1.0.14",
+  "description": "Express Mongo Model - for express development with mongodb and express js",
   "main": "index",
   "scripts": {
     "build": "tsc",

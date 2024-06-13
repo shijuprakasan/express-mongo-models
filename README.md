@@ -1,5 +1,4 @@
-
-  Generates Next Alphabet Code
+Express Mongo Model - for express development with mongodb and express js
 
   [![NPM Version][npm-version-image]][npm-url]
   [![NPM Install Size][npm-install-size-image]][npm-install-size-url]
