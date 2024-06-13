@@ -190,7 +190,6 @@ class MongoCRUDOperations {
             dataToUpdate[fieldName] = fieldData;
             yield this.preUpdate(dataToUpdate, set);
             yield this.onUpdate(dataToUpdate, set);
-            console.log("set", set);
             const resDoc = yield this.collection
                 .updateOne({ _id: id }, { $set: set })
                 .exec();
@@ -203,7 +202,6 @@ class MongoCRUDOperations {
     }
     getPage() {
         return __awaiter(this, arguments, void 0, function* (page = 0, limit = 10, sort = { _id: core_2.SORT_DIRECTION.ASC }) {
-            console.log("sort", sort);
             const docs = yield this.collection
                 .find({ $or: [{ deleted: { $eq: null } }, { deleted: false }] })
                 .skip(page * limit)

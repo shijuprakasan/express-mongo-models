@@ -7,41 +7,44 @@
 
 ```ts
 // ./todo.model.ts
-import { ICoreLiteModel } from 'express-mongo-model';
+import { ICoreLiteModel } from "express-mongo-model";
 
 export interface ITodoModel extends ICoreLiteModel {
   title: string;
 }
 
 // ./todo.data.ts
-import { CollectionSchemaBuilder } from 'express-mongo-model';
-import { ITodoModel } from "./todo.model.ts";
+import { CollectionSchemaBuilder } from "express-mongo-model";
+import { ITodoModel } from "./todo.model";
 
-const docSchema = new CollectionSchemaBuilder<ITodoModel>('todos');
-docSchema.build(({
-  title: { type: String, required: true }
-}));
+const docSchema = new CollectionSchemaBuilder<ITodoModel>("todos");
+docSchema.build({
+  title: { type: String, required: true },
+});
 const dataModel = docSchema.getDataModel();
-export {dataModel as TodoDataModel};
+export { dataModel as TodoDataModel };
 
 // ./todo.ops.ts
-import { MongoCRUDOperations, ICoreOperations } from 'express-mongo-model';
-import { ITodoModel } from "./todo.model.ts";
-import { TodoDataModel } from "./todo.data.ts";
+import { MongoCRUDOperations, ICoreOperations } from "express-mongo-model";
+import { ITodoModel } from "./todo.model";
+import { TodoDataModel } from "./todo.data";
 
-export interface ITodoOperations extends ICoreOperations<ITodoModel> { }
+export interface ITodoOperations extends ICoreOperations<ITodoModel> {}
 
-export class TodoOperations extends MongoCRUDOperations<ITodoModel> implements ITodoOperations {
+export class TodoOperations
+  extends MongoCRUDOperations<ITodoModel>
+  implements ITodoOperations
+{
   constructor() {
     super(TodoDataModel);
   }
 }
 
 // ./todo.route.ts
-import { RESTRouteBuilder } from 'express-mongo-model';
-import { TodoOperations } from "./todo.ops.ts";
+import { RESTRouteBuilder } from "express-mongo-model";
+import { TodoOperations } from "./todo.ops";
 
-const ROUTE_PREFIX = '/api/todos';
+const ROUTE_PREFIX = "/api/todos";
 
 const todoOps = new TodoOperations();
 const todoRoute = new RESTRouteBuilder(ROUTE_PREFIX, todoOps);
@@ -62,7 +65,7 @@ const PORT = parseInt(process.env.PORT ?? "8000");
 
 const app: Application = express();
 app.use(json());
-app.use(TodosRouter);
+app.use(TodosRouter());
 
 mongoose
   .connect(TRN_DB_CONNECT, {})
@@ -74,7 +77,7 @@ mongoose
   });
 
 app.listen(PORT, () => {
-    console.log(`server is listening on port ${PORT}`);
+  console.log(`server is listening on port ${PORT}`);
 });
 
 ```
@@ -86,6 +89,12 @@ Installation is done using the
 
 ```console
 $ npm install express-mongo-model
+```
+Prerequisites
+```console
+$ npm install dotenv
+$ npm install express
+$ npm install mongoose
 ```
 ## Testing (Postman)
 ```json

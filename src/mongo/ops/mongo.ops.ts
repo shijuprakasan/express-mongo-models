@@ -188,8 +188,6 @@ export class MongoCRUDOperations<T extends ICoreLiteModel>
     await this.preUpdate(dataToUpdate, set);
     await this.onUpdate(dataToUpdate, set);
 
-    console.log("set", set);
-
     const resDoc = await this.collection
       .updateOne<T>({ _id: id }, { $set: set })
       .exec();
@@ -206,7 +204,6 @@ export class MongoCRUDOperations<T extends ICoreLiteModel>
     limit: number = 10,
     sort: SORT_EXPRN | undefined = { _id: SORT_DIRECTION.ASC }
   ): Promise<IPageRespModel<T>> {
-    console.log("sort", sort);
     const docs = await this.collection
       .find<T>({ $or: [{ deleted: { $eq: null } }, { deleted: false }] })
       .skip(page * limit)
