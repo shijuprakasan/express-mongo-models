@@ -1,11 +1,11 @@
 {
   "name": "express-mongo-model",
-  "version": "1.0.8",
+  "version": "1.0.12",
   "description": "Express Mongo Model",
   "main": "index",
   "scripts": {
     "build": "tsc",
-    "test": "tsc && node ./build/server-todo.js",
+    "test": "tsc && node ./build/src/todo-server.js",
     "format": "prettier --write \"src/**/*.{js,jsx}\""
   },
   "keywords": [

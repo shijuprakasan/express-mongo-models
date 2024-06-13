@@ -1,7 +1,7 @@
-import { RESTRouteBuilder } from '../core/routes/base.route';
-import { TenantOperations } from '../ops';
+import { RESTRouteBuilder } from "../core/routes/base.route";
+import { TenantOperations } from "../ops";
 
-const ROUTE_PREFIX = '/api/tenants';
+const ROUTE_PREFIX = "/api/tenants";
 
 const tenantOps = new TenantOperations();
 

@@ -1,4 +1,4 @@
-import { Request, Response, Router } from "express";
+import { Request, Response, Router, Application } from "express";
 import { ICoreLiteModel } from "../models";
 import { ICoreOperations } from "../ops/base.ops";
 import { logger } from "../utils/logger";
@@ -13,16 +13,18 @@ export abstract class AbstractRouteBuilder {
     this.router = Router();
   }
 
-  buildCRUDRoutes(): Router {
-    this.buildGetPageRoute();
-    this.buildGetRoute();
-    this.buildGetByIdRoute();
-    this.buildPostRoute();
-    this.buildPutRoute();
-    this.buildDeleteRoute();
+  buildCRUDRoutes(): () => Router {
+    return () => {
+      this.buildGetPageRoute();
+      this.buildGetRoute();
+      this.buildGetByIdRoute();
+      this.buildPostRoute();
+      this.buildPutRoute();
+      this.buildDeleteRoute();
 
-    logger.log("Routes", this.routePrefix, "GET, PUT, POST, DELETE");
-    return this.router;
+      logger.log("Routes", this.routePrefix, "GET, PUT, POST, DELETE");
+      return this.router;
+    };
   }
 
   abstract buildGetPageRoute(): Router;
@@ -33,6 +35,15 @@ export abstract class AbstractRouteBuilder {
   abstract buildDeleteRoute(): Router;
 
   abstract buildPatchFieldRoutes(fields: string[]): Router;
+}
+
+export function useCRUDRouters<T extends ICoreLiteModel>(
+  app: Application,
+  opsRoute: RESTRouteBuilder<T>
+) {
+  const router = opsRoute.buildCRUDRoutes();
+  app.use(router);
+  return opsRoute;
 }
 
 export class RESTRouteBuilder<
@@ -63,8 +74,8 @@ export class RESTRouteBuilder<
           : undefined;
         // logger.log("get");
         const resources = await this.doOps.getPage(
-          parseInt((page as string) ?? 0),
-          parseInt((limit as string) ?? 10),
+          parseInt((page as string) ?? "0"),
+          parseInt((limit as string) ?? "10"),
           sortParam
         );
         // logger.log("get completed");

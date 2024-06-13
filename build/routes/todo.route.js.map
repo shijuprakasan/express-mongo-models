@@ -1,1 +1,0 @@
-{"version":3,"file":"todo.route.js","sourceRoot":"","sources":["../../src/routes/todo.route.ts"],"names":[],"mappings":";;;AAAA,kCAA2C;AAC3C,8CAAiD;AAEjD,MAAM,YAAY,GAAG,YAAY,CAAC;AAElC,MAAM,OAAO,GAAG,IAAI,yBAAc,EAAE,CAAC;AACrC,MAAM,SAAS,GAAG,IAAI,uBAAgB,CAAC,YAAY,EAAE,OAAO,CAAC,CAAC;AAC9D,MAAM,MAAM,GAAG,SAAS,CAAC,eAAe,EAAE,CAAC;AAExB,4BAAU"}
