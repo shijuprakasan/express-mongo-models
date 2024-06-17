@@ -1,6 +1,6 @@
 import { Request, Response, Router, Application } from "express";
 import { ICoreLiteModel } from "../models";
-import { ICoreOperations } from "../ops/base.ops";
+import { ICoreOperations } from "../controllers/base.ops";
 import { logger } from "../utils/logger";
 import { parseSortExpression } from "../models/transport.model";
 

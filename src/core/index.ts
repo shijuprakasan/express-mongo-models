@@ -1,5 +1,5 @@
 export * from './models'
 export * from './routes'
-export * from './ops'
+export * from './controllers'
 export * from './utils'
 export * from './data'
