@@ -11,9 +11,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UsersRouter = void 0;
 const base_route_1 = require("../core/routes/base.route");
-const ops_1 = require("../ops/");
+const controllers_1 = require("../controllers/");
 const ROUTE_PREFIX = "/api/users";
-const userOps = new ops_1.UserOperations();
+const userOps = new controllers_1.UserControllers();
 const opsRouteBuilder = new base_route_1.RESTRouteBuilder(ROUTE_PREFIX, userOps);
 // add mroe routes
 // add regoster route

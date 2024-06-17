@@ -9,12 +9,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.MongoCRUDOperations = void 0;
+exports.MongoCRUDController = void 0;
 const core_1 = require("../../core");
 const models_1 = require("../../models");
 const data_1 = require("../../data");
 const core_2 = require("../../core");
-class MongoCRUDOperations {
+class MongoCRUDController {
     constructor(collection) {
         this.tenantId = "";
         this.userId = "";
@@ -26,7 +26,7 @@ class MongoCRUDOperations {
         return __awaiter(this, void 0, void 0, function* () {
             if (this.tenant)
                 return this.tenant;
-            const tenantOps = new MongoCRUDOperations(data_1.TenantDataModel);
+            const tenantOps = new MongoCRUDController(data_1.TenantDataModel);
             const tenantRes = yield tenantOps.getById(this.tenantId);
             if (!tenantRes)
                 return null;
@@ -48,7 +48,7 @@ class MongoCRUDOperations {
         return __awaiter(this, void 0, void 0, function* () {
             if (this.user)
                 return this.user;
-            const userOps = new MongoCRUDOperations(data_1.UserDataModel);
+            const userOps = new MongoCRUDController(data_1.UserDataModel);
             const userres = yield userOps.getById(this.userId);
             if (!userres)
                 return null;
@@ -324,5 +324,5 @@ class MongoCRUDOperations {
         });
     }
 }
-exports.MongoCRUDOperations = MongoCRUDOperations;
-//# sourceMappingURL=mongo.ops.js.map
+exports.MongoCRUDController = MongoCRUDController;
+//# sourceMappingURL=mongo.controller.js.map

@@ -25,6 +25,7 @@ class Logger {
             this.forceLog(message, ...optionalParams);
         }
         else {
+            // 
         }
     }
     forceInfo(message, ...optionalParams) {
@@ -35,6 +36,7 @@ class Logger {
             this.forceInfo(message, ...optionalParams);
         }
         else {
+            // 
         }
     }
     forcewarn(message, ...optionalParams) {

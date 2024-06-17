@@ -18,4 +18,5 @@ __exportStar(require("./tenant.model"), exports);
 __exportStar(require("./account.model"), exports);
 __exportStar(require("./register.model"), exports);
 __exportStar(require("./user.model"), exports);
+__exportStar(require("./todo.model"), exports);
 //# sourceMappingURL=index.js.map

@@ -1,9 +1,9 @@
 import { RESTRouteBuilder } from "../core/routes/base.route";
-import { UserOperations } from "../ops/";
+import { UserController } from "../controllers/";
 
 const ROUTE_PREFIX = "/api/users";
 
-const userOps = new UserOperations();
+const userOps = new UserController();
 
 const opsRouteBuilder = new RESTRouteBuilder(ROUTE_PREFIX, userOps);
 

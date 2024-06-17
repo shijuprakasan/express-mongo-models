@@ -1,1 +1,1 @@
-export * from './base.ops';
+export * from './base.controller';

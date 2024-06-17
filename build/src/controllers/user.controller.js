@@ -9,11 +9,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UserOperations = void 0;
+exports.UserControllers = void 0;
 const mongo_1 = require("../mongo");
 const logger_1 = require("../core/utils/logger");
 const data_1 = require("../data");
-class UserOperations extends mongo_1.MongoCRUDOperations {
+class UserControllers extends mongo_1.MongoCRUDController {
     constructor() {
         super(data_1.UserDataModel);
     }
@@ -48,5 +48,5 @@ class UserOperations extends mongo_1.MongoCRUDOperations {
         return email;
     }
 }
-exports.UserOperations = UserOperations;
-//# sourceMappingURL=user.ops.js.map
+exports.UserControllers = UserControllers;
+//# sourceMappingURL=user.controller.js.map

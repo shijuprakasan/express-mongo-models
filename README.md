@@ -23,16 +23,16 @@ docSchema.build({
 const dataModel = docSchema.getDataModel();
 export { dataModel as TodoDataModel };
 
-// ./todo.ops.ts
-import { MongoCRUDOperations, ICoreOperations } from "express-mongo-model";
+// ./todo.controllers.ts
+import { MongoCRUDController, ICoreController } from "express-mongo-model";
 import { ITodoModel } from "./todo.model";
 import { TodoDataModel } from "./todo.data";
 
-export interface ITodoOperations extends ICoreOperations<ITodoModel> {}
+export interface ITodoController extends ICoreController<ITodoModel> {}
 
-export class TodoOperations
-  extends MongoCRUDOperations<ITodoModel>
-  implements ITodoOperations
+export class TodoController
+  extends MongoCRUDController<ITodoModel>
+  implements ITodoController
 {
   constructor() {
     super(TodoDataModel);
@@ -41,11 +41,11 @@ export class TodoOperations
 
 // ./todo.route.ts
 import { RESTRouteBuilder } from "express-mongo-model";
-import { TodoOperations } from "./todo.ops";
+import { TodoController } from "./todo.controller";
 
 const ROUTE_PREFIX = "/api/todos";
 
-const todoOps = new TodoOperations();
+const todoOps = new TodoController();
 const todoRoute = new RESTRouteBuilder(ROUTE_PREFIX, todoOps);
 const router = todoRoute.buildCRUDRoutes();
 

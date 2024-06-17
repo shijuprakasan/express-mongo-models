@@ -6,28 +6,30 @@ export enum SORT_DIRECTION {
 }
 
 export interface ErrorRes {
-  code?: number,
-  message: string
+  code?: number;
+  message: string;
 }
 
 export interface IReqCoreModel {}
 export interface IReqModel<T> extends IReqCoreModel {
   data?: T;
-  error?: ErrorRes
 }
 
 export interface IRespBaseModel {
   status: RES_STATUS_CODE;
 }
 
-
 export interface IRespModel<T> extends IRespBaseModel {
   data?: T;
+  error?: ErrorRes;
 }
 
-export interface IListRespModel<T> extends IRespModel<T[]>, IRespBaseModel {}
+export interface IListRespModel<T> extends IRespBaseModel {
+  data?: T[];
+  error?: ErrorRes;
+}
 
-export interface IPageRespModel<T> extends IListRespModel<T>, IRespBaseModel {
+export interface IPageRespModel<T> extends IListRespModel<T> {
   page: number;
   limit: number;
   sort: { [key: string]: SORT_DIRECTION };
@@ -47,17 +49,9 @@ export class RespModel<T> implements IRespModel<T> {
   }
 }
 
-export class ListRespModel<T> implements IListRespModel<T> {
-  data?: T[] = [];
-  error?: ErrorRes;
-  status: RES_STATUS_CODE = 200;
-
+export class ListRespModel<T> extends RespModel<T[]> {
   constructor(data?: T[], error?: ErrorRes) {
-    if (error) {
-      this.error = error;
-    } else {
-      this.data = data;
-    }
+    super(data, error);
   }
 }
 
@@ -70,7 +64,12 @@ export class PageRespModel<T>
   sort: SORT_EXPRN = {};
   status: RES_STATUS_CODE = 200;
 
-  constructor(data?: T[], page: number = 0, limit: number = 10, error?: ErrorRes) {
+  constructor(
+    data?: T[],
+    page: number = 0,
+    limit: number = 10,
+    error?: ErrorRes
+  ) {
     super(data, error);
     this.page = page;
     this.limit = limit;

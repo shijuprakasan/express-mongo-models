@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.TodoOperations = void 0;
+exports.TodoControllers = void 0;
 const todo_data_1 = require("../data/todo.data");
 const mongo_1 = require("../mongo");
-class TodoOperations extends mongo_1.MongoCRUDOperations {
+class TodoControllers extends mongo_1.MongoCRUDController {
     constructor() {
         super(todo_data_1.TodoDataModel);
     }
 }
-exports.TodoOperations = TodoOperations;
-//# sourceMappingURL=todo.ops.js.map
+exports.TodoControllers = TodoControllers;
+//# sourceMappingURL=todo.controller.js.map

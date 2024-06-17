@@ -1,9 +1,9 @@
 import { RESTRouteBuilder } from "../core";
-import { TodoOperations } from "../ops/todo.ops";
+import { TodoController } from "../controllers/";
 
 const ROUTE_PREFIX = "/api/todos";
 
-const todoOps = new TodoOperations();
+const todoOps = new TodoController();
 const todoRoute = new RESTRouteBuilder(ROUTE_PREFIX, todoOps);
 const router = todoRoute.buildCRUDRoutes();
 

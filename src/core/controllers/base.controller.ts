@@ -6,7 +6,7 @@ import {
   SORT_EXPRN,
 } from "../models/transport.model";
 
-export interface IQueryOperations<T extends ICoreLiteModel> {
+export interface IQueryController<T extends ICoreLiteModel> {
   /**
    * Returns all resources from persistance
    */
@@ -24,7 +24,7 @@ export interface IQueryOperations<T extends ICoreLiteModel> {
   ): Promise<IPageRespModel<T>>;
 }
 
-export interface IActionOperations<T extends ICoreLiteModel> {
+export interface IActionController<T extends ICoreLiteModel> {
   updatePartial(data: T, partialUpdate: string[]): Promise<T | null>;
   updatePartialAny<TModel extends unknown>(
     id: string,
@@ -103,9 +103,9 @@ export interface IActionOperations<T extends ICoreLiteModel> {
   postDelete(id: string, data: T | null): Promise<void>;
 }
 
-export interface ICoreOperations<T extends ICoreLiteModel>
-  extends IQueryOperations<T>,
-    IActionOperations<T> {
+export interface ICoreController<T extends ICoreLiteModel>
+  extends IQueryController<T>,
+    IActionController<T> {
   /**
    * id of a user who is performing the action
    */

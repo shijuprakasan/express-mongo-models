@@ -7,23 +7,26 @@ var SORT_DIRECTION;
     SORT_DIRECTION[SORT_DIRECTION["DESC"] = -1] = "DESC";
 })(SORT_DIRECTION || (exports.SORT_DIRECTION = SORT_DIRECTION = {}));
 class RespModel {
-    constructor(data) {
+    constructor(data, error) {
         this.status = 200;
-        this.data = data;
+        if (error) {
+            this.error = error;
+        }
+        else {
+            this.data = data;
+        }
     }
 }
 exports.RespModel = RespModel;
-class ListRespModel {
-    constructor(data) {
-        this.data = [];
-        this.status = 200;
-        this.data = data;
+class ListRespModel extends RespModel {
+    constructor(data, error) {
+        super(data, error);
     }
 }
 exports.ListRespModel = ListRespModel;
 class PageRespModel extends ListRespModel {
-    constructor(data, page = 0, limit = 10) {
-        super(data);
+    constructor(data, page = 0, limit = 10, error) {
+        super(data, error);
         this.page = 0;
         this.limit = 10;
         this.sort = {};

@@ -1,15 +1,15 @@
 import { IUserModel } from "../models";
-import { ICoreOperations } from "../core";
-import { MongoCRUDOperations } from "../mongo";
+import { ICoreController } from "../core";
+import { MongoCRUDController } from "../mongo";
 import { logger } from "../core/utils/logger";
 import { UserDataModel } from '../data';
 import { IRegisterModel } from "../models";
 
-export interface IUserOperations extends ICoreOperations<IUserModel> {
+export interface IUserController extends ICoreController<IUserModel> {
     register(data: IRegisterModel): Promise<IUserModel>;
 }
 
-export class UserOperations extends MongoCRUDOperations<IUserModel> implements IUserOperations {
+export class UserController extends MongoCRUDController<IUserModel> implements IUserController {
   constructor() {
     super(UserDataModel);
   }

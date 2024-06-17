@@ -12,7 +12,7 @@ import {
   IUserModel,
 } from "../../models";
 import { IBaseDataModel } from "../data";
-import { ICoreOperations } from "../../core";
+import { ICoreController } from "../../core";
 import { logger } from "../../core/utils/logger";
 import { TenantDataModel, UserDataModel } from "../../data";
 import {
@@ -26,8 +26,8 @@ import {
   SORT_EXPRN,
 } from "../../core";
 
-export class MongoCRUDOperations<T extends ICoreLiteModel>
-  implements ICoreOperations<T>
+export class MongoCRUDController<T extends ICoreLiteModel>
+  implements ICoreController<T>
 {
   collection: IBaseDataModel<T>;
   tenantId: string = "";
@@ -41,7 +41,7 @@ export class MongoCRUDOperations<T extends ICoreLiteModel>
 
   private async getTenant(): Promise<ITenantModel | null> {
     if (this.tenant) return this.tenant;
-    const tenantOps = new MongoCRUDOperations(TenantDataModel);
+    const tenantOps = new MongoCRUDController(TenantDataModel);
     const tenantRes = await tenantOps.getById(this.tenantId);
     if (!tenantRes) return null;
     this.tenant = tenantRes?.data as ITenantModel;
@@ -58,7 +58,7 @@ export class MongoCRUDOperations<T extends ICoreLiteModel>
 
   private async getUser(): Promise<IUserModel | null> {
     if (this.user) return this.user;
-    const userOps = new MongoCRUDOperations(UserDataModel);
+    const userOps = new MongoCRUDController(UserDataModel);
     const userres = await userOps.getById(this.userId);
     if (!userres) return null;
     this.user = userres?.data as IUserModel;
