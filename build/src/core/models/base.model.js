@@ -1,18 +1,30 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.newChangeTrack = exports.getUserLiteModel = void 0;
+exports.getTenantLiteModel = getTenantLiteModel;
+exports.getUserLiteModel = getUserLiteModel;
+exports.newChangeTrack = newChangeTrack;
+function getTenantLiteModel(tenant) {
+    if (!tenant)
+        return undefined;
+    return {
+        _id: tenant._id,
+        tenantName: tenant.tenantName,
+        locale: tenant.locale,
+        currency: tenant.currency,
+    };
+}
 function getUserLiteModel(user) {
+    if (!user)
+        return undefined;
     return {
         _id: user._id,
         userName: user.userName,
     };
 }
-exports.getUserLiteModel = getUserLiteModel;
 function newChangeTrack(user) {
     return {
         by: getUserLiteModel(user),
         on: new Date(),
     };
 }
-exports.newChangeTrack = newChangeTrack;
 //# sourceMappingURL=base.model.js.map

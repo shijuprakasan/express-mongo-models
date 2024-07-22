@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.newCustomSchema = exports.CollectionSchemaBuilder = exports.baseSchmea = exports.changeTrackSchema = exports.tenantLiteSchema = exports.userLiteSchema = void 0;
+exports.CollectionSchemaBuilder = exports.baseSchmea = exports.changeTrackSchema = exports.tenantLiteSchema = exports.userLiteSchema = void 0;
+exports.newCustomSchema = newCustomSchema;
 const mongoose_1 = require("mongoose");
 const bson_1 = require("bson");
 exports.userLiteSchema = new mongoose_1.Schema({
@@ -50,5 +51,4 @@ function newCustomSchema(obj, prefix) {
     schema.add(obj, prefix);
     return schema;
 }
-exports.newCustomSchema = newCustomSchema;
 //# sourceMappingURL=mongo.data.js.map

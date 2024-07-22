@@ -5,57 +5,73 @@ Express Mongo Model - for express development with mongodb and express js
   [![NPM Downloads][npm-downloads-image]][npm-downloads-url]
 
 ```ts
-// ./todo.model.ts
-import { ICoreLiteModel } from "express-mongo-model";
+// ./models/todo.model.ts
+import { IBaseModel } from "express-mongo-model";
+import { IDbData } from "express-mongo-model";
+import { ICollectionController, BaseController } from "express-mongo-model";
+import { CollectionRouter, IAbstractRouteBuilder } from "express-mongo-model";
+import { Schema } from "mongoose";
+import { DbCollection } from "express-mongo-model";
 
-export interface ITodoModel extends ICoreLiteModel {
-  title: string;
+export interface IMyTodoModel extends IBaseModel {
+    title: string;
+    completed: boolean;
 }
 
-// ./todo.data.ts
-import { CollectionSchemaBuilder } from "express-mongo-model";
-import { ITodoModel } from "./todo.model";
 
-const docSchema = new CollectionSchemaBuilder<ITodoModel>("todos");
-docSchema.build({
-  title: { type: String, required: true },
-});
-const dataModel = docSchema.getDataModel();
-export { dataModel as TodoDataModel };
+// ./data/todo.data.ts
+export interface IMyTodoData extends IDbData<IMyTodoModel> {
+}
 
-// ./todo.controllers.ts
-import { MongoCRUDController, ICoreController } from "express-mongo-model";
-import { ITodoModel } from "./todo.model";
-import { TodoDataModel } from "./todo.data";
 
-export interface ITodoController extends ICoreController<ITodoModel> {}
+// ./controllers/todo.controllers.ts
+export interface IMyTodoController extends ICollectionController<IMyTodoModel> {
+}
 
-export class TodoController
-  extends MongoCRUDController<ITodoModel>
-  implements ITodoController
-{
-  constructor() {
-    super(TodoDataModel);
+export class MyTodoController
+  extends BaseController<IMyTodoModel>
+  implements IMyTodoController {
+
+  constructor(collection: IMyTodoData) {
+    super(collection);
   }
 }
 
-// ./todo.route.ts
-import { RESTRouteBuilder } from "express-mongo-model";
-import { TodoController } from "./todo.controller";
 
+// ./routes/todo.route.ts
 const ROUTE_PREFIX = "/api/todos";
 
-const todoOps = new TodoController();
-const todoRoute = new RESTRouteBuilder(ROUTE_PREFIX, todoOps);
-const router = todoRoute.buildCRUDRoutes();
+export class MyTodoRoute extends CollectionRouter<IMyTodoModel> {
+    constructor(collectionController: ICollectionController<IMyTodoModel>) {
+        super(ROUTE_PREFIX, collectionController);
+    }
 
-export { router as TodosRouter };
+    buildCustomRoutes(collectionRouter: IAbstractRouteBuilder): void {
+    }
+}
+
+
+// ./mongo/todo.collection.ts
+const COLLECTION_NAME = "todos";
+
+export class MyTodoCollection extends DbCollection<IMyTodoModel> {
+    constructor() {
+        super(COLLECTION_NAME);
+    }
+
+    dataSchema(): Schema {
+        return new Schema({
+            title: { type: String, required: true },
+            completed: { type: Boolean, required: true },
+        });
+    }
+}
+
 
 // ./index.ts
 import express, { Application } from "express";
 import mongoose from "mongoose";
 import { json } from "body-parser";
-import { TodosRouter } from "./todo.route";
 const dotenv = require("dotenv");
 
 dotenv.config();
@@ -64,7 +80,7 @@ const PORT = parseInt(process.env.PORT ?? "8000");
 
 const app: Application = express();
 app.use(json());
-app.use(TodosRouter());
+app.use(new MyTodoRoute(new MyTodoController(new MyTodoCollection())).router);
 
 mongoose
   .connect(TRN_DB_CONNECT, {})
@@ -79,6 +95,7 @@ app.listen(PORT, () => {
   console.log(`server is listening on port ${PORT}`);
 });
 
+
 ```
 
 ## Installation
@@ -91,9 +108,9 @@ $ npm install express-mongo-model
 ```
 Prerequisites
 ```console
-$ npm install dotenv
-$ npm install express
-$ npm install mongoose
+npm install body-parser dotenv express joi mongoose morgan swagger-ui-express tsoa
+
+npm install --save-dev @eslint/js @types/express @types/morgan @types/swagger-ui-express concurrently eslint globals nodemon ts-node ts-node-dev typescript
 ```
 ## Testing (Postman)
 ```json

@@ -1,13 +1,20 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.parseSortExpressions = exports.parseSortExpression = exports.PageRespModel = exports.ListRespModel = exports.RespModel = exports.SORT_DIRECTION = void 0;
+exports.PageRespModel = exports.ListRespModel = exports.RespModel = exports.SORT_DIRECTION = void 0;
+exports.getError = getError;
+exports.parseSortExpression = parseSortExpression;
+exports.parseSortExpressions = parseSortExpressions;
+const errorcodes_1 = require("../errorcodes");
 var SORT_DIRECTION;
 (function (SORT_DIRECTION) {
     SORT_DIRECTION[SORT_DIRECTION["ASC"] = 1] = "ASC";
     SORT_DIRECTION[SORT_DIRECTION["DESC"] = -1] = "DESC";
 })(SORT_DIRECTION || (exports.SORT_DIRECTION = SORT_DIRECTION = {}));
+function getError(code) {
+    return (0, errorcodes_1.getErrorContent)(code);
+}
 class RespModel {
-    constructor(data, error) {
+    constructor(data, error, status = 200) {
         this.status = 200;
         if (error) {
             this.error = error;
@@ -15,6 +22,7 @@ class RespModel {
         else {
             this.data = data;
         }
+        this.status = status;
     }
 }
 exports.RespModel = RespModel;
@@ -43,7 +51,6 @@ function parseSortExpression(sortExpr) {
         sortParts[1] === "desc" ? SORT_DIRECTION.DESC : SORT_DIRECTION.ASC;
     return sort;
 }
-exports.parseSortExpression = parseSortExpression;
 function parseSortExpressions(sortExpr) {
     var sort = {};
     for (let i = 0; i < sortExpr.length; i++) {
@@ -53,5 +60,4 @@ function parseSortExpressions(sortExpr) {
     }
     return sort;
 }
-exports.parseSortExpressions = parseSortExpressions;
 //# sourceMappingURL=transport.model.js.map
