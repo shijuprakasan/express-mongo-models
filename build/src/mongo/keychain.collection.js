@@ -14,9 +14,10 @@ const mongoose_1 = require("mongoose");
 const bson_1 = require("bson");
 const mongo_1 = require("../core/mongo");
 const models_1 = require("../models");
+const COLLECTION_NAME = "keychains";
 class KeychainCollection extends mongo_1.DbCollection {
     constructor() {
-        super("keychains");
+        super(COLLECTION_NAME);
     }
     dataSchema() {
         return new mongoose_1.Schema({

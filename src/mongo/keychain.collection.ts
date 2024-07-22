@@ -1,12 +1,14 @@
 import { Schema } from "mongoose";
 import { BSON } from "bson";
 import { DbCollection } from "../core/mongo";
-import { IKeychainCollection } from "../data";
+import { IKeychainData } from "../data";
 import { buildNewKeyChain, IKeychainLiteModel, IKeychainModel } from "../models";
 
-export class KeychainCollection extends DbCollection<IKeychainModel> implements IKeychainCollection {
+const COLLECTION_NAME = "keychains";
+
+export class KeychainCollection extends DbCollection<IKeychainModel> implements IKeychainData {
   constructor() {
-    super("keychains");
+    super(COLLECTION_NAME);
   }
 
   dataSchema(): Schema {

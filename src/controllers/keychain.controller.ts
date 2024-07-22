@@ -5,7 +5,7 @@ import {
   IRespModel,
   RespModel,
 } from "../core/models";
-import { IKeychainCollection } from "../data";
+import { IKeychainData } from "../data";
 
 export interface IKeychainController extends ICollectionController<IKeychainModel> {
   getLiteById(id: string): Promise<IRespModel<IKeychainLiteModel | null>>;
@@ -17,7 +17,7 @@ export class KeychainController
   extends BaseController<IKeychainModel>
   implements IKeychainController {
 
-  constructor(collection: IKeychainCollection) {
+  constructor(collection: IKeychainData) {
     super(collection);
   }
 
@@ -26,7 +26,7 @@ export class KeychainController
    * @param id primary id of a resource
    */
   async getLiteById(id: string): Promise<IRespModel<IKeychainLiteModel | null>> {
-    const obj = await await (this.collection as IKeychainCollection).getLite(id);
+    const obj = await await (this.collection as IKeychainData).getLite(id);
     return new RespModel(obj);
   }
 
@@ -35,7 +35,7 @@ export class KeychainController
    * @param id primary id of a resource
    */
   async getChildrenById(id: string): Promise<IRespModel<IKeychainLiteModel[]>> {
-    const children = await (this.collection as IKeychainCollection).getChildren(id);
+    const children = await (this.collection as IKeychainData).getChildren(id);
     return new RespModel(children);
   }
 
@@ -46,7 +46,7 @@ export class KeychainController
   async getFullById(id: string): Promise<IRespModel<IKeychainModel | null>> {
     const obj = await super.getById(id);
     if (obj.data) {
-      const children = await (this.collection as IKeychainCollection).getChildren(id);
+      const children = await (this.collection as IKeychainData).getChildren(id);
       obj.data.children = children;
       if (obj.data.p1Id) {
         const p1 = await this.getLiteById(obj.data.p1Id);

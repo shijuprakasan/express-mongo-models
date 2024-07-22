@@ -1,5 +1,5 @@
-import { IDbData } from "../core";
+import { IDbData } from "../core/data";
 import { ITodoModel } from "../models";
 
-export interface ITodoCollection extends IDbData<ITodoModel> {
-  }
+export interface ITodoData extends IDbData<ITodoModel> {
+}

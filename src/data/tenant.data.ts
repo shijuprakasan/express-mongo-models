@@ -1,4 +1,4 @@
 import { ITenantBaseData } from "../core/data";
 
-export interface ITenantCollection extends ITenantBaseData {
+export interface ITenantData extends ITenantBaseData {
 }

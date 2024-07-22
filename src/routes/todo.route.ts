@@ -3,11 +3,13 @@ import { IListRespModel, IPageRespModel, IRespModel } from '../core';
 import { CollectionRouter, IAbstractRouteBuilder, ICollectionController } from "../core";
 import { ITodoModel } from "../models";
 
+const ROUTE_PREFIX = "/api/todos";
+
 @Route("/api/todos")
 @Tags("todos")
 export class TodoRoute extends CollectionRouter<ITodoModel> {
     constructor(collectionController: ICollectionController<ITodoModel>) {
-        super('/api/todos', collectionController);
+        super(ROUTE_PREFIX, collectionController);
     }
 
     buildCustomRoutes(collectionRouter: IAbstractRouteBuilder): void {

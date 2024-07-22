@@ -24,9 +24,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.TodoRoute = void 0;
 const tsoa_1 = require("tsoa");
 const core_1 = require("../core");
+const ROUTE_PREFIX = "/api/todos";
 let TodoRoute = class TodoRoute extends core_1.CollectionRouter {
     constructor(collectionController) {
-        super('/api/todos', collectionController);
+        super(ROUTE_PREFIX, collectionController);
     }
     buildCustomRoutes(collectionRouter) {
     }

@@ -1,6 +1,6 @@
 import { IUserModel } from "../core/models";
 import { BaseController, ICollectionController } from "../core/controllers";
-import { IUserCollection } from "../data";
+import { IUserData } from "../data";
 import { IRegisterModel } from "../models";
 import {
   IRespModel,
@@ -16,7 +16,7 @@ export interface IUserController extends ICollectionController<IUserModel> {
 export class UserController
   extends BaseController<IUserModel>
   implements IUserController {
-  constructor(collection: IUserCollection) {
+  constructor(collection: IUserData) {
     super(collection);
   }
 

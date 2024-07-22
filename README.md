@@ -5,7 +5,7 @@ Express Mongo Model - for express development with mongodb and express js
   [![NPM Downloads][npm-downloads-image]][npm-downloads-url]
 
 ```ts
-// ./todo.model.ts
+// ./models/todo.model.ts
 import { IBaseModel } from "express-mongo-model";
 
 export interface ITodoModel extends IBaseModel {
@@ -13,50 +13,77 @@ export interface ITodoModel extends IBaseModel {
     completed: boolean;
 }
 
-// ./todo.data.ts
-import { CollectionSchemaBuilder } from "express-mongo-model";
-import { ITodoModel } from "./todo.model";
+// ./data/todo.data.ts
+import { IDbData } from "express-mongo-model";
+import { ITodoModel } from "./models/todo.model";
 
-const docSchema = new CollectionSchemaBuilder<ITodoModel>("todos");
-docSchema.build({
-  title: { type: String, required: true },
-});
-const dataModel = docSchema.getDataModel();
-export { dataModel as TodoDataModel };
+export interface ITodoData extends IDbData<ITodoModel> {
+}
 
-// ./todo.controllers.ts
-import { MongoCRUDController, ICoreController } from "express-mongo-model";
-import { ITodoModel } from "./todo.model";
-import { TodoDataModel } from "./todo.data";
+// ./controllers/todo.controllers.ts
+import { ICollectionController, BaseController } from "express-mongo-model";
+import { ITodoModel } from "./../models/todo.model";
+import { ITodoData } from "./../data/todo.data";
 
-export interface ITodoController extends ICoreController<ITodoModel> {}
+export interface ITodoController extends ICollectionController<ITodoModel> {
+}
 
 export class TodoController
-  extends MongoCRUDController<ITodoModel>
-  implements ITodoController
-{
-  constructor() {
-    super(TodoDataModel);
+  extends BaseController<ITodoModel>
+  implements ITodoController {
+
+  constructor(collection: ITodoData) {
+    super(collection);
   }
 }
 
-// ./todo.route.ts
+// ./routes/todo.route.ts
 import { RESTRouteBuilder } from "express-mongo-model";
 import { TodoController } from "./todo.controller";
 
+
+import { IListRespModel, IPageRespModel, IRespModel, CollectionRouter, IAbstractRouteBuilder, ICollectionController } from "express-mongo-model";
+import { ITodoModel } from "./../models/todo.model";
+
 const ROUTE_PREFIX = "/api/todos";
 
-const todoOps = new TodoController();
-const todoRoute = new RESTRouteBuilder(ROUTE_PREFIX, todoOps);
-const router = todoRoute.buildCRUDRoutes();
+export class TodoRoute extends CollectionRouter<ITodoModel> {
+    constructor(collectionController: ICollectionController<ITodoModel>) {
+        super(ROUTE_PREFIX, collectionController);
+    }
 
-export { router as TodosRouter };
+    buildCustomRoutes(collectionRouter: IAbstractRouteBuilder): void {
+    }
+}
+
+// ./mongo/todo.collection.ts
+import { Schema } from "mongoose";
+import { DbCollection } from "express-mongo-model";
+import { ITodoModel } from "./../models/todo.model";
+
+const COLLECTION_NAME = "todos";
+
+export class TodoCollection extends DbCollection<ITodoModel> {
+    constructor() {
+        super(COLLECTION_NAME);
+    }
+
+    dataSchema(): Schema {
+        return new Schema({
+            title: { type: String, required: true },
+            completed: { type: Boolean, required: true },
+        });
+    }
+}
+
 
 // ./index.ts
 import express, { Application } from "express";
 import mongoose from "mongoose";
 import { json } from "body-parser";
-import { TodosRouter } from "./todo.route";
+import { TodoRoute } from "./routes/todo.route.ts";
+import { TodoController } from "./controllers/todo.controllers.ts";
+import { TodoCollection } from "./mongo/todo.collection.ts";
 const dotenv = require("dotenv");
 
 dotenv.config();
@@ -65,7 +92,7 @@ const PORT = parseInt(process.env.PORT ?? "8000");
 
 const app: Application = express();
 app.use(json());
-app.use(TodosRouter());
+app.use(new TodoRoute(new TodoController(new TodoCollection())).router));
 
 mongoose
   .connect(TRN_DB_CONNECT, {})
