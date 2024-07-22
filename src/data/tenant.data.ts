@@ -1,14 +1,10 @@
-import { ITenantModel } from "../models";
-import { CollectionSchemaBuilder } from "../mongo";
+import { ITenantBaseCollection, TenantBaseCollection } from "../core/data";
 
-const docSchema = new CollectionSchemaBuilder<ITenantModel>('tenants');
-docSchema.build(({
-  tenantName: { type: String, required: true },
-  locale: { type: String, required: true, default: 'en-IN' },
-  currency: { type: String, uppercase: true, required: true, default: 'INR' },
-  isActive: { type: Boolean, required: true, default: true },
-}));
+export interface ITenantCollection extends ITenantBaseCollection {
+}
 
-const dataModel = docSchema.getDataModel();
-
-export {dataModel as TenantDataModel};
+export class TenantCollection extends TenantBaseCollection implements ITenantCollection {
+  constructor() {
+    super()
+  }
+}

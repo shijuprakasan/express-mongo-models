@@ -1,15 +1,16 @@
-import { ICoreController } from "../core";
-import { TodoDataModel } from "../data/todo.data";
-import { ITodoLiteModel } from "../models/todo.model";
-import { MongoCRUDController } from "../mongo";
+import { ITodoModel } from "../models";
+import { ICollectionController } from "../core/controllers";
+import { MongoCollectionController } from "../core/controllers";
+import { ITodoCollection } from "../data";
 
-export interface ITodoController extends ICoreController<ITodoLiteModel> {}
+export interface ITodoController extends ICollectionController<ITodoModel> {
+}
 
 export class TodoController
-  extends MongoCRUDController<ITodoLiteModel>
-  implements ITodoController
-{
-  constructor() {
-    super(TodoDataModel);
+  extends MongoCollectionController<ITodoModel>
+  implements ITodoController {
+
+  constructor(collection: ITodoCollection) {
+    super(collection);
   }
 }

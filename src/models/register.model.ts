@@ -1,6 +1,6 @@
 import { IUserLiteModel } from "../core/models";
 
-export interface IRegisterModel extends IUserLiteModel {
+export interface IRegisterModel {
     email: string;
     phone: string;
     

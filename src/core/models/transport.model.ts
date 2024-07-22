@@ -1,3 +1,5 @@
+import { getErrorContent } from "../errorcodes";
+
 export type SORT_EXPRN = { [key: string]: SORT_DIRECTION };
 export type RES_STATUS_CODE = 200 | 201 | 400 | 404 | 401 | 403 | 500;
 export enum SORT_DIRECTION {
@@ -5,9 +7,13 @@ export enum SORT_DIRECTION {
   DESC = -1,
 }
 
-export interface ErrorRes {
+export interface IErrorRes {
   code?: number;
   message: string;
+}
+
+export function getError(code: number): IErrorRes {
+  return getErrorContent(code);
 }
 
 export interface IReqCoreModel {}
@@ -21,12 +27,12 @@ export interface IRespBaseModel {
 
 export interface IRespModel<T> extends IRespBaseModel {
   data?: T;
-  error?: ErrorRes;
+  error?: IErrorRes;
 }
 
 export interface IListRespModel<T> extends IRespBaseModel {
   data?: T[];
-  error?: ErrorRes;
+  error?: IErrorRes;
 }
 
 export interface IPageRespModel<T> extends IListRespModel<T> {
@@ -37,20 +43,22 @@ export interface IPageRespModel<T> extends IListRespModel<T> {
 
 export class RespModel<T> implements IRespModel<T> {
   data?: T;
-  error?: ErrorRes;
+  error?: IErrorRes;
   status: RES_STATUS_CODE = 200;
 
-  constructor(data?: T, error?: ErrorRes) {
+  constructor(data?: T, error?: IErrorRes, status = 200) {
     if (error) {
       this.error = error;
     } else {
       this.data = data;
     }
+
+    this.status = status as RES_STATUS_CODE;
   }
 }
 
 export class ListRespModel<T> extends RespModel<T[]> {
-  constructor(data?: T[], error?: ErrorRes) {
+  constructor(data?: T[], error?: IErrorRes) {
     super(data, error);
   }
 }
@@ -68,7 +76,7 @@ export class PageRespModel<T>
     data?: T[],
     page: number = 0,
     limit: number = 10,
-    error?: ErrorRes
+    error?: IErrorRes
   ) {
     super(data, error);
     this.page = page;

@@ -17,7 +17,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 __exportStar(require("./core"), exports);
 __exportStar(require("./data"), exports);
 __exportStar(require("./models"), exports);
-__exportStar(require("./mongo"), exports);
 __exportStar(require("./controllers"), exports);
 __exportStar(require("./routes"), exports);
 //# sourceMappingURL=index.js.map
