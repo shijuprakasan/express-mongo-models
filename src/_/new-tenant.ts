@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import { ITenantLiteModel, ITenantModel, IUserModel } from "../core";
-import { TenantCollection, UserCollection } from "../data";
 import dotenv from "dotenv";
+import { TenantCollection, UserCollection } from "../mongo";
 
 dotenv.config();
 const TRN_DB_CONNECT = process.env.TRN_DB_CONNECT ?? "";

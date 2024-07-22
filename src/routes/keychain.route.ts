@@ -1,9 +1,8 @@
 import { CollectionRouter, IAbstractRouteBuilder } from '../core/routes';
-import { IKeychainController, KeychainController } from '../controllers';
+import { IKeychainController } from '../controllers';
 import { Body, Delete, Get, Post, Put, Query, Route, Tags } from 'tsoa';
 import { IKeychainLiteModel, IKeychainModel } from '../models';
 import { IListRespModel, IPageRespModel, IRespModel } from '../core';
-import { KeychainCollection } from '../data';
 
 const ROUTE_PREFIX = '/api/keychains';
 

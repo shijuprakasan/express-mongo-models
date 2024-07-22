@@ -1,11 +1,11 @@
 import { IKeychainLiteModel, IKeychainModel } from "../models";
 import { ICollectionController } from "../core/controllers";
-import { MongoCollectionController } from "../core/controllers";
+import { BaseController } from "../core/controllers";
 import {
   IRespModel,
   RespModel,
 } from "../core/models";
-import { IKeychainCollection } from "../data";
+import { IKeychainCollection } from "../collection";
 
 export interface IKeychainController extends ICollectionController<IKeychainModel> {
   getLiteById(id: string): Promise<IRespModel<IKeychainLiteModel | null>>;
@@ -14,7 +14,7 @@ export interface IKeychainController extends ICollectionController<IKeychainMode
 }
 
 export class KeychainController
-  extends MongoCollectionController<IKeychainModel>
+  extends BaseController<IKeychainModel>
   implements IKeychainController {
 
   constructor(collection: IKeychainCollection) {

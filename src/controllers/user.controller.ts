@@ -1,7 +1,6 @@
 import { IUserModel } from "../core/models";
-import { ICollectionController } from "../core/controllers";
-import { MongoCollectionController } from "../core/controllers";
-import { IUserCollection } from "../data";
+import { BaseController, ICollectionController } from "../core/controllers";
+import { IUserCollection } from "../collection";
 import { IRegisterModel } from "../models";
 import {
   IRespModel,
@@ -15,7 +14,7 @@ export interface IUserController extends ICollectionController<IUserModel> {
 // @Route("/api/users")
 // @Tags("Users")
 export class UserController
-  extends MongoCollectionController<IUserModel>
+  extends BaseController<IUserModel>
   implements IUserController {
   constructor(collection: IUserCollection) {
     super(collection);

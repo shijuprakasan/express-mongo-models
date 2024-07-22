@@ -12,8 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.CollectionRouter = exports.CreateOnlyCollectionRouter = exports.ReadonlyCollectionRouter = exports.AbstractCollectionRouter = exports.ModelRouteBuilder = exports.AbstractRouteBuilder = void 0;
 const express_1 = require("express");
 const logger_1 = require("../utils/logger");
-const transport_model_1 = require("../models/transport.model");
-const tsoa_1 = require("tsoa");
+const models_1 = require("../models");
 class AbstractRouteBuilder {
     constructor(routePrefix, options = "crud") {
         this.options = "crud";
@@ -79,7 +78,7 @@ class ModelRouteBuilder extends AbstractRouteBuilder {
             this.assertAndSetClaims(req);
             const { page, limit, sort } = req.query;
             const sortParam = sort
-                ? (0, transport_model_1.parseSortExpression)(sort)
+                ? (0, models_1.parseSortExpression)(sort)
                 : undefined;
             const resources = yield this.doController.getPage(parseInt((_a = page) !== null && _a !== void 0 ? _a : 0), parseInt((_b = limit) !== null && _b !== void 0 ? _b : 10), sortParam);
             return res.status(200).send(resources);
@@ -112,7 +111,7 @@ class ModelRouteBuilder extends AbstractRouteBuilder {
             catch (err) {
                 return res
                     .status(500)
-                    .send(new transport_model_1.RespModel(undefined, { message: (_a = err === null || err === void 0 ? void 0 : err.message) !== null && _a !== void 0 ? _a : err, code: (_b = err === null || err === void 0 ? void 0 : err.code) !== null && _b !== void 0 ? _b : 500 }, 500));
+                    .send(new models_1.RespModel(undefined, { message: (_a = err === null || err === void 0 ? void 0 : err.message) !== null && _a !== void 0 ? _a : err, code: (_b = err === null || err === void 0 ? void 0 : err.code) !== null && _b !== void 0 ? _b : 500 }, 500));
             }
         }));
         return this.router;
@@ -129,7 +128,7 @@ class ModelRouteBuilder extends AbstractRouteBuilder {
             catch (err) {
                 return res
                     .status(500)
-                    .send(new transport_model_1.RespModel(undefined, { message: (_a = err === null || err === void 0 ? void 0 : err.message) !== null && _a !== void 0 ? _a : err, code: (_b = err === null || err === void 0 ? void 0 : err.code) !== null && _b !== void 0 ? _b : 500 }, 500));
+                    .send(new models_1.RespModel(undefined, { message: (_a = err === null || err === void 0 ? void 0 : err.message) !== null && _a !== void 0 ? _a : err, code: (_b = err === null || err === void 0 ? void 0 : err.code) !== null && _b !== void 0 ? _b : 500 }, 500));
             }
         }));
         return this.router;
@@ -150,7 +149,7 @@ class ModelRouteBuilder extends AbstractRouteBuilder {
                 catch (err) {
                     return res
                         .status(500)
-                        .send(new transport_model_1.RespModel(undefined, { message: (_a = err === null || err === void 0 ? void 0 : err.message) !== null && _a !== void 0 ? _a : err, code: (_b = err === null || err === void 0 ? void 0 : err.code) !== null && _b !== void 0 ? _b : 500 }, 500));
+                        .send(new models_1.RespModel(undefined, { message: (_a = err === null || err === void 0 ? void 0 : err.message) !== null && _a !== void 0 ? _a : err, code: (_b = err === null || err === void 0 ? void 0 : err.code) !== null && _b !== void 0 ? _b : 500 }, 500));
                 }
             }));
         });
@@ -169,7 +168,7 @@ class ModelRouteBuilder extends AbstractRouteBuilder {
             catch (err) {
                 return res
                     .status(500)
-                    .send(new transport_model_1.RespModel(undefined, { message: (_a = err === null || err === void 0 ? void 0 : err.message) !== null && _a !== void 0 ? _a : err, code: (_b = err === null || err === void 0 ? void 0 : err.code) !== null && _b !== void 0 ? _b : 500 }, 500));
+                    .send(new models_1.RespModel(undefined, { message: (_a = err === null || err === void 0 ? void 0 : err.message) !== null && _a !== void 0 ? _a : err, code: (_b = err === null || err === void 0 ? void 0 : err.code) !== null && _b !== void 0 ? _b : 500 }, 500));
             }
         }));
     }
@@ -185,7 +184,7 @@ class ModelRouteBuilder extends AbstractRouteBuilder {
             catch (err) {
                 return res
                     .status(500)
-                    .send(new transport_model_1.RespModel(undefined, { message: (_a = err === null || err === void 0 ? void 0 : err.message) !== null && _a !== void 0 ? _a : err, code: (_b = err === null || err === void 0 ? void 0 : err.code) !== null && _b !== void 0 ? _b : 500 }, 500));
+                    .send(new models_1.RespModel(undefined, { message: (_a = err === null || err === void 0 ? void 0 : err.message) !== null && _a !== void 0 ? _a : err, code: (_b = err === null || err === void 0 ? void 0 : err.code) !== null && _b !== void 0 ? _b : 500 }, 500));
             }
         }));
     }
@@ -202,15 +201,17 @@ class ModelRouteBuilder extends AbstractRouteBuilder {
             catch (err) {
                 return res
                     .status(500)
-                    .send(new transport_model_1.RespModel(undefined, { message: (_a = err === null || err === void 0 ? void 0 : err.message) !== null && _a !== void 0 ? _a : err, code: (_b = err === null || err === void 0 ? void 0 : err.code) !== null && _b !== void 0 ? _b : 500 }, 500));
+                    .send(new models_1.RespModel(undefined, { message: (_a = err === null || err === void 0 ? void 0 : err.message) !== null && _a !== void 0 ? _a : err, code: (_b = err === null || err === void 0 ? void 0 : err.code) !== null && _b !== void 0 ? _b : 500 }, 500));
             }
         }));
     }
 }
 exports.ModelRouteBuilder = ModelRouteBuilder;
-class AbstractCollectionRouter extends tsoa_1.Controller {
+class AbstractCollectionRouter {
+    get router() {
+        return this.collectionRouter.router;
+    }
     constructor(routePrefix, collection, options = "readonly") {
-        super();
         this.collection = collection;
         this.collectionRouter = new ModelRouteBuilder(routePrefix, collection, options);
         this.buildCustomRoutes(this.collectionRouter);

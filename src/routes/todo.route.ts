@@ -1,14 +1,13 @@
 import { Body, Delete, Get, Post, Put, Query, Route, Tags } from 'tsoa';
 import { IListRespModel, IPageRespModel, IRespModel } from '../core';
-import { CollectionRouter, IAbstractRouteBuilder, ICollectionController, MongoCollectionController } from "../core";
-import { TodoCollection } from "../data";
+import { CollectionRouter, IAbstractRouteBuilder, ICollectionController } from "../core";
 import { ITodoModel } from "../models";
 
 @Route("/api/todos")
 @Tags("todos")
 export class TodoRoute extends CollectionRouter<ITodoModel> {
     constructor(collectionController: ICollectionController<ITodoModel>) {
-        super('/api/todos',  collectionController);
+        super('/api/todos', collectionController);
     }
 
     buildCustomRoutes(collectionRouter: IAbstractRouteBuilder): void {

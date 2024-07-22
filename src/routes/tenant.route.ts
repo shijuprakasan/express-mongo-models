@@ -1,8 +1,7 @@
 import { Body, Delete, Get, Post, Put, Query, Route, Tags } from 'tsoa';
-import { ITenantController, TenantController } from '../controllers';
+import { ITenantController } from '../controllers';
 import { CollectionRouter, IAbstractRouteBuilder } from '../core/routes';
 import { ITenantModel } from '../core';
-import { TenantCollection } from '../data';
 import { IListRespModel, IPageRespModel, IRespModel } from '../core';
 
 const ROUTE_PREFIX = '/api/tenants';

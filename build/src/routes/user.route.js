@@ -20,14 +20,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var _a, _b;
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.userRouter = exports.UserRoute = void 0;
+exports.UserRoute = void 0;
 const tsoa_1 = require("tsoa");
 const base_route_1 = require("../core/routes/base.route");
-const controllers_1 = require("../controllers");
-const data_1 = require("../data");
-const models_1 = require("../models");
 const ROUTE_PREFIX = "/api/users";
 let UserRoute = class UserRoute extends base_route_1.CollectionRouter {
     constructor(controller) {
@@ -134,7 +130,7 @@ __decorate([
     (0, tsoa_1.Post)("/register"),
     __param(0, (0, tsoa_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [typeof (_b = typeof models_1.IRegisterModel !== "undefined" && models_1.IRegisterModel) === "function" ? _b : Object]),
+    __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], UserRoute.prototype, "register", null);
 __decorate([
@@ -187,8 +183,6 @@ __decorate([
 exports.UserRoute = UserRoute = __decorate([
     (0, tsoa_1.Route)("/api/users"),
     (0, tsoa_1.Tags)("Users"),
-    __metadata("design:paramtypes", [typeof (_a = typeof controllers_1.IUserController !== "undefined" && controllers_1.IUserController) === "function" ? _a : Object])
+    __metadata("design:paramtypes", [Object])
 ], UserRoute);
-const userRouter = () => new UserRoute(new controllers_1.UserController(new data_1.UserCollection())).collectionRouter;
-exports.userRouter = userRouter;
 //# sourceMappingURL=user.route.js.map

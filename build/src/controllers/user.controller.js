@@ -14,7 +14,7 @@ const controllers_1 = require("../core/controllers");
 const models_1 = require("../core/models");
 // @Route("/api/users")
 // @Tags("Users")
-class UserController extends controllers_1.MongoCollectionController {
+class UserController extends controllers_1.BaseController {
     constructor(collection) {
         super(collection);
     }

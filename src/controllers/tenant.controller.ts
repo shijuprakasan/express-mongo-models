@@ -1,13 +1,13 @@
 import { ITenantModel } from "../core/models";
 import { ICollectionController } from "../core/controllers";
-import { MongoCollectionController } from "../core/controllers";
-import { ITenantCollection } from "../data";
+import { BaseController } from "../core/controllers";
+import { ITenantCollection } from "../collection";
 
 export interface ITenantController extends ICollectionController<ITenantModel> {
 }
 
 export class TenantController
-  extends MongoCollectionController<ITenantModel>
+  extends BaseController<ITenantModel>
   implements ITenantController {
   constructor(collection: ITenantCollection) {
     super(collection);

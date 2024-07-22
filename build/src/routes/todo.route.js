@@ -20,14 +20,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var _a, _b;
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.todoRouter = exports.TodoRouter = void 0;
+exports.TodoRoute = void 0;
 const tsoa_1 = require("tsoa");
 const core_1 = require("../core");
-const data_1 = require("../data");
-const models_1 = require("../models");
-let TodoRouter = class TodoRouter extends core_1.CollectionRouter {
+let TodoRoute = class TodoRoute extends core_1.CollectionRouter {
     constructor(collectionController) {
         super('/api/todos', collectionController);
     }
@@ -121,13 +118,13 @@ let TodoRouter = class TodoRouter extends core_1.CollectionRouter {
         });
     }
 };
-exports.TodoRouter = TodoRouter;
+exports.TodoRoute = TodoRoute;
 __decorate([
     (0, tsoa_1.Get)("/"),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
-], TodoRouter.prototype, "get", null);
+], TodoRoute.prototype, "get", null);
 __decorate([
     (0, tsoa_1.Get)("/q"),
     __param(0, (0, tsoa_1.Query)()),
@@ -136,44 +133,42 @@ __decorate([
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number, Number, String]),
     __metadata("design:returntype", Promise)
-], TodoRouter.prototype, "getPage", null);
+], TodoRoute.prototype, "getPage", null);
 __decorate([
     (0, tsoa_1.Get)("/:id"),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
-], TodoRouter.prototype, "getById", null);
+], TodoRoute.prototype, "getById", null);
 __decorate([
     (0, tsoa_1.Post)("/:id"),
     __param(1, (0, tsoa_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, typeof (_a = typeof models_1.ITodoModel !== "undefined" && models_1.ITodoModel) === "function" ? _a : Object]),
+    __metadata("design:paramtypes", [String, Object]),
     __metadata("design:returntype", Promise)
-], TodoRouter.prototype, "update", null);
+], TodoRoute.prototype, "update", null);
 __decorate([
     (0, tsoa_1.Put)("/"),
     __param(0, (0, tsoa_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [typeof (_b = typeof models_1.ITodoModel !== "undefined" && models_1.ITodoModel) === "function" ? _b : Object]),
+    __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
-], TodoRouter.prototype, "add", null);
+], TodoRoute.prototype, "add", null);
 __decorate([
     (0, tsoa_1.Delete)("/:id/permanent"),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
-], TodoRouter.prototype, "deletePermanent", null);
+], TodoRoute.prototype, "deletePermanent", null);
 __decorate([
     (0, tsoa_1.Delete)("/:id"),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
-], TodoRouter.prototype, "delete", null);
-exports.TodoRouter = TodoRouter = __decorate([
+], TodoRoute.prototype, "delete", null);
+exports.TodoRoute = TodoRoute = __decorate([
     (0, tsoa_1.Route)("/api/todos"),
     (0, tsoa_1.Tags)("todos"),
     __metadata("design:paramtypes", [Object])
-], TodoRouter);
-const todoRouter = () => new TodoRouter(new core_1.MongoCollectionController(new data_1.TodoCollection())).collectionRouter;
-exports.todoRouter = todoRouter;
+], TodoRoute);
 //# sourceMappingURL=todo.route.js.map

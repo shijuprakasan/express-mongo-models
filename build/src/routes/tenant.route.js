@@ -20,13 +20,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var _a;
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.tenantRouter = exports.TenantRoute = void 0;
+exports.TenantRoute = void 0;
 const tsoa_1 = require("tsoa");
-const controllers_1 = require("../controllers");
 const routes_1 = require("../core/routes");
-const data_1 = require("../data");
 const ROUTE_PREFIX = '/api/tenants';
 let TenantRoute = class TenantRoute extends routes_1.CollectionRouter {
     constructor(controller) {
@@ -174,8 +171,6 @@ __decorate([
 exports.TenantRoute = TenantRoute = __decorate([
     (0, tsoa_1.Route)("/api/tenants"),
     (0, tsoa_1.Tags)("Tenants"),
-    __metadata("design:paramtypes", [typeof (_a = typeof controllers_1.ITenantController !== "undefined" && controllers_1.ITenantController) === "function" ? _a : Object])
+    __metadata("design:paramtypes", [Object])
 ], TenantRoute);
-const tenantRouter = () => new TenantRoute(new controllers_1.TenantController(new data_1.TenantCollection())).collectionRouter;
-exports.tenantRouter = tenantRouter;
 //# sourceMappingURL=tenant.route.js.map

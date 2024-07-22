@@ -21,13 +21,15 @@ const morgan_1 = __importDefault(require("morgan"));
 const body_parser_1 = require("body-parser");
 const logger_1 = require("./core/utils/logger");
 const routes_1 = require("./routes");
+const controllers_1 = require("./controllers");
+const mongo_1 = require("./mongo");
 // Application router setup
 function buildApplicationRoutes(app) {
     app
-        .use((0, routes_1.todoRouter)().router)
-        .use((0, routes_1.keychainRouter)().router)
-        .use((0, routes_1.userRouter)().router)
-        .use((0, routes_1.tenantRouter)().router);
+        .use(new routes_1.TodoRoute(new controllers_1.TodoController(new mongo_1.TodoCollection())).router)
+        .use(new routes_1.KeychainRoute(new controllers_1.KeychainController(new mongo_1.KeychainCollection())).router)
+        .use(new routes_1.UserRoute(new controllers_1.UserController(new mongo_1.UserCollection())).router)
+        .use(new routes_1.TenantRoute(new controllers_1.TenantController(new mongo_1.TenantCollection())).router);
 }
 dotenv.config();
 const TRN_DB_CONNECT = (_a = process.env.TRN_DB_CONNECT) !== null && _a !== void 0 ? _a : "";

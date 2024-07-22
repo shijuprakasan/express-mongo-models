@@ -20,14 +20,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var _a, _b, _c;
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.keychainRouter = exports.KeychainRoute = void 0;
+exports.KeychainRoute = void 0;
 const routes_1 = require("../core/routes");
-const controllers_1 = require("../controllers");
 const tsoa_1 = require("tsoa");
-const models_1 = require("../models");
-const data_1 = require("../data");
 const ROUTE_PREFIX = '/api/keychains';
 let KeychainRoute = class KeychainRoute extends routes_1.CollectionRouter {
     constructor(controller) {
@@ -204,14 +200,14 @@ __decorate([
     (0, tsoa_1.Post)("/:id"),
     __param(1, (0, tsoa_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, typeof (_b = typeof models_1.IKeychainModel !== "undefined" && models_1.IKeychainModel) === "function" ? _b : Object]),
+    __metadata("design:paramtypes", [String, Object]),
     __metadata("design:returntype", Promise)
 ], KeychainRoute.prototype, "update", null);
 __decorate([
     (0, tsoa_1.Put)("/"),
     __param(0, (0, tsoa_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [typeof (_c = typeof models_1.IKeychainLiteModel !== "undefined" && models_1.IKeychainLiteModel) === "function" ? _c : Object]),
+    __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], KeychainRoute.prototype, "add", null);
 __decorate([
@@ -229,8 +225,6 @@ __decorate([
 exports.KeychainRoute = KeychainRoute = __decorate([
     (0, tsoa_1.Route)("/api/keychains"),
     (0, tsoa_1.Tags)("Keychains"),
-    __metadata("design:paramtypes", [typeof (_a = typeof controllers_1.IKeychainController !== "undefined" && controllers_1.IKeychainController) === "function" ? _a : Object])
+    __metadata("design:paramtypes", [Object])
 ], KeychainRoute);
-const keychainRouter = () => new KeychainRoute(new controllers_1.KeychainController(new data_1.KeychainCollection())).collectionRouter;
-exports.keychainRouter = keychainRouter;
 //# sourceMappingURL=keychain.route.js.map

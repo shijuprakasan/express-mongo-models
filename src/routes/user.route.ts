@@ -1,7 +1,6 @@
 import { Body, Delete, Get, Post, Put, Query, Route, Tags } from 'tsoa';
 import { CollectionRouter, IAbstractRouteBuilder } from "../core/routes/base.route";
-import { IUserController, UserController } from "../controllers";
-import { UserCollection } from "../data";
+import { IUserController } from "../controllers";
 import { IRegisterModel } from "../models";
 import { IListRespModel, IPageRespModel, IRespModel, IUserModel } from '../core';
 

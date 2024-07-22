@@ -22,7 +22,7 @@ import {
   TenantCollection,
   TodoCollection,
   UserCollection
-} from "./data";
+} from "./mongo";
 
 // Application router setup
 function buildApplicationRoutes(app: Application) {

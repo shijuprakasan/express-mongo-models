@@ -12,7 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.KeychainController = void 0;
 const controllers_1 = require("../core/controllers");
 const models_1 = require("../core/models");
-class KeychainController extends controllers_1.MongoCollectionController {
+class KeychainController extends controllers_1.BaseController {
     constructor(collection) {
         super(collection);
     }

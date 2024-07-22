@@ -1,12 +1,8 @@
 import { Schema } from "mongoose";
 import { BSON } from "bson";
-import { DbCollection, IDbCollection } from "../core/data";
+import { DbCollection } from "../core/mongo";
+import { IKeychainCollection } from "../collection";
 import { buildNewKeyChain, IKeychainLiteModel, IKeychainModel } from "../models";
-
-export interface IKeychainCollection extends IDbCollection<IKeychainModel> {
-  getLite(id: string): Promise<IKeychainLiteModel | null>;
-  getChildren(id: string): Promise<IKeychainLiteModel[]>;
-}
 
 export class KeychainCollection extends DbCollection<IKeychainModel> implements IKeychainCollection {
   constructor() {

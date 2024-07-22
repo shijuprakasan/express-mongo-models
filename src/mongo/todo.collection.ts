@@ -1,9 +1,6 @@
 import { Schema } from "mongoose";
-import { DbCollection, IDbCollection } from "../core";
+import { DbCollection } from "../core/mongo";
 import { ITodoModel } from "../models";
-
-export interface ITodoCollection extends IDbCollection<ITodoModel> {
-  }
 
 export class TodoCollection extends DbCollection<ITodoModel> {
     constructor() {
