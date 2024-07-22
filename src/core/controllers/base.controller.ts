@@ -1,5 +1,5 @@
 import { IAuthContext, IRequireAuthContext } from "../auth.context";
-import { IDbCollection } from "../collection";
+import { IDbData } from "../data";
 import {
   IListRespModel,
   IPageRespModel,
@@ -15,7 +15,7 @@ import {
 
 export class BaseController<T extends IBaseLiteModel>
   implements ICollectionController<T> {
-  collection: IDbCollection<T>;
+  collection: IDbData<T>;
   authContext?: IAuthContext;
 
   setContext(authContext?: IAuthContext): void {
@@ -31,7 +31,7 @@ export class BaseController<T extends IBaseLiteModel>
     return this.authContext?.userId;
   }
 
-  constructor(collection: IDbCollection<T>) {
+  constructor(collection: IDbData<T>) {
     this.collection = collection;
   }
 
@@ -39,7 +39,7 @@ export class BaseController<T extends IBaseLiteModel>
 
   getController<TNew extends IBaseLiteModel>(
     collectionName: string,
-    collectionPredicate: () => IDbCollection<TNew>
+    collectionPredicate: () => IDbData<TNew>
   ): ICollectionController<TNew> {
     const res = this.controllerCache[
       collectionName
@@ -219,6 +219,6 @@ export interface ICollectionController<T extends IBaseLiteModel>
   // tenantController: MongoCollectionController<tenantModel>;
   getController<TNew extends IBaseLiteModel>(
     collectionName: string,
-    collectionPredicate: () => IDbCollection<TNew>
+    collectionPredicate: () => IDbData<TNew>
   ): ICollectionController<TNew>;
 }

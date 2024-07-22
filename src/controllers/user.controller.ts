@@ -1,6 +1,6 @@
 import { IUserModel } from "../core/models";
 import { BaseController, ICollectionController } from "../core/controllers";
-import { IUserCollection } from "../collection";
+import { IUserCollection } from "../data";
 import { IRegisterModel } from "../models";
 import {
   IRespModel,

@@ -1,7 +1,7 @@
 import { ITodoModel } from "../models";
 import { ICollectionController } from "../core/controllers";
 import { BaseController } from "../core/controllers";
-import { ITodoCollection } from "../collection";
+import { ITodoCollection } from "../data";
 
 export interface ITodoController extends ICollectionController<ITodoModel> {
 }

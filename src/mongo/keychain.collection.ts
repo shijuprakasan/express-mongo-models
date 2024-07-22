@@ -1,7 +1,7 @@
 import { Schema } from "mongoose";
 import { BSON } from "bson";
 import { DbCollection } from "../core/mongo";
-import { IKeychainCollection } from "../collection";
+import { IKeychainCollection } from "../data";
 import { buildNewKeyChain, IKeychainLiteModel, IKeychainModel } from "../models";
 
 export class KeychainCollection extends DbCollection<IKeychainModel> implements IKeychainCollection {

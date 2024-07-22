@@ -10,9 +10,9 @@ import {
 } from "../models";
 import { logger } from "../utils";
 
-export interface IDbCollection<T extends IBaseLiteModel>
-  extends IQueryCollection<T>,
-  IUpdateCollection<T>,
+export interface IDbData<T extends IBaseLiteModel>
+  extends IQueryData<T>,
+  IUpdateData<T>,
   IRequireAuthContext {
 
   setContext(authContext?: IAuthContext): void;
@@ -30,11 +30,11 @@ export interface IDbCollection<T extends IBaseLiteModel>
   ): Promise<TModel | null>;
 }
 
-export interface IUserBaseCollection extends IDbCollection<IUserModel> { }
+export interface IUserBaseData extends IDbData<IUserModel> { }
 
-export interface ITenantBaseCollection extends IDbCollection<ITenantModel> { }
+export interface ITenantBaseData extends IDbData<ITenantModel> { }
 
-export interface IQueryCollection<T extends IBaseLiteModel>
+export interface IQueryData<T extends IBaseLiteModel>
   extends IRequireAuthContext {
   /**
    * Returns all resources from persistance
@@ -54,7 +54,7 @@ export interface IQueryCollection<T extends IBaseLiteModel>
   ): Promise<T[]>;
 }
 
-export interface IUpdateCollection<T extends IBaseLiteModel>
+export interface IUpdateData<T extends IBaseLiteModel>
   extends IRequireAuthContext {
   updatePartial(data: T, partialUpdate: string[]): Promise<T | null>;
   updatePartialAny<TModel extends any>(

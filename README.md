@@ -6,10 +6,11 @@ Express Mongo Model - for express development with mongodb and express js
 
 ```ts
 // ./todo.model.ts
-import { ICoreLiteModel } from "express-mongo-model";
+import { IBaseModel } from "express-mongo-model";
 
-export interface ITodoModel extends ICoreLiteModel {
-  title: string;
+export interface ITodoModel extends IBaseModel {
+    title: string;
+    completed: boolean;
 }
 
 // ./todo.data.ts

@@ -17,7 +17,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 __exportStar(require("./errorcodes"), exports);
 __exportStar(require("./auth.context"), exports);
 __exportStar(require("./controllers"), exports);
-__exportStar(require("./collection"), exports);
+__exportStar(require("./data"), exports);
 __exportStar(require("./models"), exports);
 __exportStar(require("./routes"), exports);
 __exportStar(require("./utils"), exports);

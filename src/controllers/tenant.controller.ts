@@ -1,7 +1,7 @@
 import { ITenantModel } from "../core/models";
 import { ICollectionController } from "../core/controllers";
 import { BaseController } from "../core/controllers";
-import { ITenantCollection } from "../collection";
+import { ITenantCollection } from "../data";
 
 export interface ITenantController extends ICollectionController<ITenantModel> {
 }

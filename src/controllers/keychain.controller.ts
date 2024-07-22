@@ -5,7 +5,7 @@ import {
   IRespModel,
   RespModel,
 } from "../core/models";
-import { IKeychainCollection } from "../collection";
+import { IKeychainCollection } from "../data";
 
 export interface IKeychainController extends ICollectionController<IKeychainModel> {
   getLiteById(id: string): Promise<IRespModel<IKeychainLiteModel | null>>;

@@ -31,7 +31,7 @@ import {
   tenantLiteSchema,
 } from "./schema.data";
 import { logger } from "./../../core/utils";
-import { IDbCollection, ITenantBaseCollection, IUserBaseCollection } from "./../collection";
+import { IDbData, ITenantBaseData, IUserBaseData } from "../data";
 
 export abstract class AbstractDbCollection<T extends IBaseLiteModel> {
   tenantSchema: boolean = true;
@@ -118,13 +118,13 @@ export abstract class AbstractDbCollection<T extends IBaseLiteModel> {
     if (this.authContext) this.authContext.user = value;
   }
 
-  private modelCache: { [key: string]: IDbCollection<any> } = {};
+  private modelCache: { [key: string]: IDbData<any> } = {};
 
   getCollection<TNew extends IBaseLiteModel>(
     collectionName: string,
-    collectionPredicate: () => IDbCollection<TNew>
-  ): IDbCollection<TNew> {
-    const res = this.modelCache[collectionName] as IDbCollection<TNew>;
+    collectionPredicate: () => IDbData<TNew>
+  ): IDbData<TNew> {
+    const res = this.modelCache[collectionName] as IDbData<TNew>;
     if (res) {
       console.log("getCollection from cache", collectionName);
       return res;
@@ -308,7 +308,7 @@ export abstract class AbstractDbCollection<T extends IBaseLiteModel> {
 
 export abstract class DbCollection<T extends IBaseLiteModel>
   extends AbstractDbCollection<T>
-  implements IDbCollection<T>, IRequireAuthContext {
+  implements IDbData<T>, IRequireAuthContext {
   constructor(
     collectionName: string,
     tenantSchema: boolean = true,
@@ -563,7 +563,7 @@ export abstract class DbCollection<T extends IBaseLiteModel>
 
 export class UserBaseCollection
   extends DbCollection<IUserModel>
-  implements IUserBaseCollection {
+  implements IUserBaseData {
   constructor() {
     super("users", true);
   }
@@ -597,7 +597,7 @@ export class UserBaseCollection
 
 export class TenantBaseCollection
   extends DbCollection<ITenantModel>
-  implements ITenantBaseCollection {
+  implements ITenantBaseData {
   constructor() {
     super("tenants", false);
   }
