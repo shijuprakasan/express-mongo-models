@@ -17,4 +17,5 @@ Object.defineProperty(exports, "__esModule", { value: true });
 __exportStar(require("./tenant.controller"), exports);
 __exportStar(require("./user.controller"), exports);
 __exportStar(require("./todo.controller"), exports);
+__exportStar(require("./keychain.controller"), exports);
 //# sourceMappingURL=index.js.map

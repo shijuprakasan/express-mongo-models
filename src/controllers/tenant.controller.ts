@@ -1,15 +1,15 @@
-import { ICoreController } from "../core";
-import { MongoCRUDController } from "../mongo";
-import { TenantDataModel } from "../data";
-import { ITenantModel } from "../models";
+import { ITenantModel } from "../core/models";
+import { ICollectionController } from "../core/controllers";
+import { BaseController } from "../core/controllers";
+import { ITenantData } from "../data";
 
-export interface ITenantController extends ICoreController<ITenantModel> {}
+export interface ITenantController extends ICollectionController<ITenantModel> {
+}
 
 export class TenantController
-  extends MongoCRUDController<ITenantModel>
-  implements ITenantController
-{
-  constructor() {
-    super(TenantDataModel);
+  extends BaseController<ITenantModel>
+  implements ITenantController {
+  constructor(collection: ITenantData) {
+    super(collection);
   }
 }

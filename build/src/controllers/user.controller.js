@@ -9,17 +9,17 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UserControllers = void 0;
-const mongo_1 = require("../mongo");
-const logger_1 = require("../core/utils/logger");
-const data_1 = require("../data");
-class UserControllers extends mongo_1.MongoCRUDController {
-    constructor() {
-        super(data_1.UserDataModel);
+exports.UserController = void 0;
+const controllers_1 = require("../core/controllers");
+const models_1 = require("../core/models");
+// @Route("/api/users")
+// @Tags("Users")
+class UserController extends controllers_1.BaseController {
+    constructor(collection) {
+        super(collection);
     }
     register(data) {
         return __awaiter(this, void 0, void 0, function* () {
-            logger_1.logger.log('register', data.email);
             // add to identity repository
             const userId = this.addIndentityUser(data.password, data.email);
             // prepare new user data
@@ -28,18 +28,18 @@ class UserControllers extends mongo_1.MongoCRUDController {
                 lastName: data.lastName,
                 email: data.email,
                 phone: data.phone,
-                userRole: "superadmin",
+                userRole: "standard",
                 isActive: true,
                 _id: userId,
                 userName: userId,
             };
-            this.updateBaseModelProps(newUser);
+            this.collection.updateBaseModelProps(newUser);
             // add to repo
-            const doc1 = this.collection.build(newUser);
-            // add change track
-            const doc = yield doc1.save();
-            newUser._id = doc1._id;
-            return newUser;
+            const doc1 = yield this.collection.add(newUser);
+            if (doc1) {
+                newUser._id = doc1._id;
+            }
+            return new models_1.RespModel(newUser);
         });
     }
     addIndentityUser(password, email) {
@@ -48,5 +48,5 @@ class UserControllers extends mongo_1.MongoCRUDController {
         return email;
     }
 }
-exports.UserControllers = UserControllers;
+exports.UserController = UserController;
 //# sourceMappingURL=user.controller.js.map

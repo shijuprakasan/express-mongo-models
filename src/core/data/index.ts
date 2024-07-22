@@ -1,1 +1,1 @@
-export const CORE_DATA = 'core dara';
+export * from './base.data';

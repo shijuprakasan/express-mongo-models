@@ -1,5 +1,6 @@
-import { ICoreLiteModel } from "../core";
+import { IBaseModel } from '../core/models';
 
-export interface ITodoLiteModel extends ICoreLiteModel {
-  title: string;
+export interface ITodoModel extends IBaseModel {
+    title: string;
+    completed: boolean;
 }

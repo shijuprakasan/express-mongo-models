@@ -1,1 +1,1 @@
-{"version":3,"file":"tenant.controller.js","sourceRoot":"","sources":["../../../src/controllers/tenant.controller.ts"],"names":[],"mappings":";;;AACA,oCAA+C;AAC/C,kCAA0C;AAK1C,MAAa,gBACX,SAAQ,2BAAiC;IAGzC;QACE,KAAK,CAAC,sBAAe,CAAC,CAAC;IACzB,CAAC;CACF;AAPD,4CAOC"}
+{"version":3,"file":"tenant.controller.js","sourceRoot":"","sources":["../../../src/controllers/tenant.controller.ts"],"names":[],"mappings":";;;AAEA,qDAAqD;AAMrD,MAAa,gBACX,SAAQ,4BAA4B;IAEpC,YAAY,UAAuB;QACjC,KAAK,CAAC,UAAU,CAAC,CAAC;IACpB,CAAC;CACF;AAND,4CAMC"}
