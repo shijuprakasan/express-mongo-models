@@ -35,6 +35,7 @@ export interface ITenantLiteModel extends IBaseLiteModel {
   tenantName: string;
   locale: string;
   currency: string;
+  address: string;
 }
 
 /**

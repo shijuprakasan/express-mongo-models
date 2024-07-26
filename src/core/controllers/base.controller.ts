@@ -14,7 +14,8 @@ import {
 } from "../models/";
 
 export class BaseController<T extends IBaseLiteModel>
-  implements ICollectionController<T> {
+  implements ICollectionController<T>
+{
   collection: IDbData<T>;
   authContext?: IAuthContext;
 
@@ -48,9 +49,7 @@ export class BaseController<T extends IBaseLiteModel>
       console.log("getController from cache", collectionName);
       return res;
     } else {
-      const newController = new BaseController<TNew>(
-        collectionPredicate()
-      );
+      const newController = new BaseController<TNew>(collectionPredicate());
       this.setContext(this.authContext);
       this.controllerCache[collectionName] = newController as any;
       console.log("getController new", collectionName);
@@ -206,8 +205,8 @@ export interface IActionController<T extends IBaseLiteModel>
 
 export interface ICollectionController<T extends IBaseLiteModel>
   extends IQueryController<T>,
-  IRequireAuthContext,
-  IActionController<T> {
+    IRequireAuthContext,
+    IActionController<T> {
   /**
    * id of a user who is performing the action
    */

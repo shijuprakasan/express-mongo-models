@@ -1,7 +1,4 @@
-import {
-  IAuthContext,
-  IRequireAuthContext,
-} from "../auth.context";
+import { IAuthContext, IRequireAuthContext } from "../auth.context";
 import {
   IBaseLiteModel,
   ITenantModel,
@@ -12,9 +9,8 @@ import { logger } from "../utils";
 
 export interface IDbData<T extends IBaseLiteModel>
   extends IQueryData<T>,
-  IUpdateData<T>,
-  IRequireAuthContext {
-
+    IUpdateData<T>,
+    IRequireAuthContext {
   setContext(authContext?: IAuthContext): void;
   updateBaseModelProps(data: T, isCreate?: boolean): Promise<T>;
 
@@ -30,9 +26,9 @@ export interface IDbData<T extends IBaseLiteModel>
   ): Promise<TModel | null>;
 }
 
-export interface IUserBaseData extends IDbData<IUserModel> { }
+export interface IUserBaseData extends IDbData<IUserModel> {}
 
-export interface ITenantBaseData extends IDbData<ITenantModel> { }
+export interface ITenantBaseData extends IDbData<ITenantModel> {}
 
 export interface IQueryData<T extends IBaseLiteModel>
   extends IRequireAuthContext {

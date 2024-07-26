@@ -32,7 +32,7 @@ export class Logger implements ILogger {
     if (this.threshold <= LOG_THRESHOLDS.INFO) {
       this.forceLog(message, ...optionalParams);
     } else {
-      // 
+      //
     }
   }
 
@@ -44,7 +44,7 @@ export class Logger implements ILogger {
     if (this.threshold <= LOG_THRESHOLDS.INFO) {
       this.forceInfo(message, ...optionalParams);
     } else {
-      // 
+      //
     }
   }
 

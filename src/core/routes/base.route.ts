@@ -54,7 +54,8 @@ export interface ICRUDRouteBuilder extends IAbstractRouteBuilder {
 }
 
 export abstract class AbstractRouteBuilder
-  implements ICRUDRouteBuilder, IAbstractRouteBuilder {
+  implements ICRUDRouteBuilder, IAbstractRouteBuilder
+{
   router: Router;
   routePrefix: string;
   options: ROUTE_OPTIONS = "crud";
@@ -120,7 +121,8 @@ export abstract class AbstractRouteBuilder
 
 export class ModelRouteBuilder<T extends IBaseLiteModel>
   extends AbstractRouteBuilder
-  implements ICRUDRouteBuilder, IAbstractRouteBuilder, IRequireAuthContext {
+  implements ICRUDRouteBuilder, IAbstractRouteBuilder, IRequireAuthContext
+{
   doController: ICollectionController<T>;
   authContext?: IAuthContext;
 
@@ -375,7 +377,7 @@ export interface ICreateOnlyCollectionRouter<T extends IBaseLiteModel>
 }
 export interface ICollectionRouter<T extends IBaseLiteModel>
   extends ICreateOnlyCollectionRouter<T>,
-  IReadonlyCollectionRouter<T> {
+    IReadonlyCollectionRouter<T> {
   update(id: string, data: T): Promise<IRespModel<T | null>>;
   deletePermanent(id: string): Promise<IRespModel<boolean>>;
   delete(id: string): Promise<IRespModel<boolean>>;
@@ -408,7 +410,8 @@ export abstract class AbstractCollectionRouter<T extends IBaseLiteModel> {
 
 export abstract class ReadonlyCollectionRouter<T extends IBaseLiteModel>
   extends AbstractCollectionRouter<T>
-  implements IReadonlyCollectionRouter<T> {
+  implements IReadonlyCollectionRouter<T>
+{
   constructor(
     routePrefix: string,
     collection: ICollectionController<T>,
@@ -460,7 +463,8 @@ export abstract class ReadonlyCollectionRouter<T extends IBaseLiteModel>
 
 export abstract class CreateOnlyCollectionRouter<T extends IBaseLiteModel>
   extends ReadonlyCollectionRouter<T>
-  implements ICreateOnlyCollectionRouter<T> {
+  implements ICreateOnlyCollectionRouter<T>
+{
   constructor(
     routePrefix: string,
     collection: ICollectionController<T>,
@@ -482,9 +486,10 @@ export abstract class CreateOnlyCollectionRouter<T extends IBaseLiteModel>
 export abstract class CollectionRouter<T extends IBaseLiteModel>
   extends CreateOnlyCollectionRouter<T>
   implements
-  ICollectionRouter<T>,
-  ICreateOnlyCollectionRouter<T>,
-  IReadonlyCollectionRouter<T> {
+    ICollectionRouter<T>,
+    ICreateOnlyCollectionRouter<T>,
+    IReadonlyCollectionRouter<T>
+{
   constructor(
     routePrefix: string,
     collection: ICollectionController<T>,

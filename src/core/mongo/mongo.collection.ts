@@ -289,15 +289,7 @@ export abstract class AbstractDbCollection<T extends IBaseLiteModel> {
     return { deleted: 0, __v: 0 };
   }
 
-  protected defaultPopulationExpandSpec(populateOptions?: string[]) {
-    return (
-      populateOptions && populateOptions?.length === 1
-        ? populateOptions && populateOptions[0]
-        : populateOptions ?? undefined
-    ) as string;
-  }
-
-  protected defaultPopulationSelectSpec(populateOptions?: string[]) {
+  protected defaultPopulationSelectSpec(populateOptions: string): any {
     return (
       populateOptions && populateOptions?.length > 0
         ? { deleted: 0, __v: 0 }
@@ -308,7 +300,8 @@ export abstract class AbstractDbCollection<T extends IBaseLiteModel> {
 
 export abstract class DbCollection<T extends IBaseLiteModel>
   extends AbstractDbCollection<T>
-  implements IDbData<T>, IRequireAuthContext {
+  implements IDbData<T>, IRequireAuthContext
+{
   constructor(
     collectionName: string,
     tenantSchema: boolean = true,
@@ -403,59 +396,66 @@ export abstract class DbCollection<T extends IBaseLiteModel>
     sort: SORT_EXPRN | undefined = { _id: SORT_DIRECTION.ASC },
     populate?: string[]
   ): Promise<T[]> {
-    const docs = await this.collection
+    let query = this.collection
       .find<T>(this.defaultFilterOptionSpec())
       .skip(page * limit)
       .limit(limit)
       .sort(sort)
-      .select(this.defaultSelectOptionSpec())
-      .populate(
-        this.defaultPopulationExpandSpec(populate),
-        this.defaultPopulationSelectSpec(populate)
-      )
-      .exec();
+      .select(this.defaultSelectOptionSpec());
 
-    // const pageRes = new PageRespModel(docs, page, limit);
-    // pageRes.sort = sort;
-    // pageRes.status = docs.length > 0 ? 404 : 200;
+    if (populate && populate.length > 0) {
+      for (const pop of populate) {
+        query = query.populate(pop, this.defaultPopulationSelectSpec(pop));
+      }
+    }
+
+    const docs = await query.exec();
     return docs;
   }
 
   async getCustom(filterQuery: any, populate?: string[]): Promise<T[]> {
     filterQuery = { ...filterQuery, ...this.defaultFilterOptionSpec() };
-    const doc = await this.collection
+    let query = this.collection
       .find<T>(filterQuery)
-      .select(this.defaultSelectOptionSpec())
-      .populate(
-        this.defaultPopulationExpandSpec(populate),
-        this.defaultPopulationSelectSpec(populate)
-      )
-      .exec();
+      .select(this.defaultSelectOptionSpec());
+
+    if (populate && populate.length > 0) {
+      for (const pop of populate) {
+        query = query.populate(pop, this.defaultPopulationSelectSpec(pop));
+      }
+    }
+
+    const doc = await query.exec();
     return doc;
   }
 
   async get(populate?: string[]): Promise<T[]> {
-    const docs = await this.collection
+    let query = this.collection
       .find<T>(this.defaultFilterOptionSpec())
-      .select(this.defaultSelectOptionSpec())
-      .populate(
-        this.defaultPopulationExpandSpec(populate),
-        this.defaultPopulationSelectSpec(populate)
-      )
-      .exec();
+      .select(this.defaultSelectOptionSpec());
+
+    if (populate && populate.length > 0) {
+      for (const pop of populate) {
+        query = query.populate(pop, this.defaultPopulationSelectSpec(pop));
+      }
+    }
+
+    const docs = await query.exec();
     return docs;
   }
 
   async getById(id: string, populate?: string[]): Promise<T | null> {
-    const doc = await this.collection
+    let query = this.collection
       .findById<T>(id)
-      .select(this.defaultSelectOptionSpec())
-      .populate(
-        this.defaultPopulationExpandSpec(populate),
-        this.defaultPopulationSelectSpec(populate)
-      )
-      .exec();
+      .select(this.defaultSelectOptionSpec());
 
+    if (populate && populate.length > 0) {
+      for (const pop of populate) {
+        query = query.populate(pop, this.defaultPopulationSelectSpec(pop));
+      }
+    }
+
+    const doc = await query.exec();
     if (
       this.tenantId &&
       doc &&
@@ -563,7 +563,8 @@ export abstract class DbCollection<T extends IBaseLiteModel>
 
 export class UserBaseCollection
   extends DbCollection<IUserModel>
-  implements IUserBaseData {
+  implements IUserBaseData
+{
   constructor() {
     super("users", true);
   }
@@ -597,7 +598,8 @@ export class UserBaseCollection
 
 export class TenantBaseCollection
   extends DbCollection<ITenantModel>
-  implements ITenantBaseData {
+  implements ITenantBaseData
+{
   constructor() {
     super("tenants", false);
   }

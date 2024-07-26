@@ -1,2 +1,2 @@
-export * from './schema.data'
-export * from './mongo.collection'
+export * from "./schema.data";
+export * from "./mongo.collection";
