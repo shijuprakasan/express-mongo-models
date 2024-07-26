@@ -250,11 +250,6 @@ class AbstractDbCollection {
     defaultSelectOptionSpec() {
         return { deleted: 0, __v: 0 };
     }
-    defaultPopulationExpandSpec(populateOptions) {
-        return (populateOptions && (populateOptions === null || populateOptions === void 0 ? void 0 : populateOptions.length) === 1
-            ? populateOptions && populateOptions[0]
-            : populateOptions !== null && populateOptions !== void 0 ? populateOptions : undefined);
-    }
     defaultPopulationSelectSpec(populateOptions) {
         return (populateOptions && (populateOptions === null || populateOptions === void 0 ? void 0 : populateOptions.length) > 0
             ? { deleted: 0, __v: 0 }
@@ -338,48 +333,61 @@ class DbCollection extends AbstractDbCollection {
     }
     getPage() {
         return __awaiter(this, arguments, void 0, function* (page = 0, limit = 10, sort = { _id: models_1.SORT_DIRECTION.ASC }, populate) {
-            const docs = yield this.collection
+            let query = this.collection
                 .find(this.defaultFilterOptionSpec())
                 .skip(page * limit)
                 .limit(limit)
                 .sort(sort)
-                .select(this.defaultSelectOptionSpec())
-                .populate(this.defaultPopulationExpandSpec(populate), this.defaultPopulationSelectSpec(populate))
-                .exec();
-            // const pageRes = new PageRespModel(docs, page, limit);
-            // pageRes.sort = sort;
-            // pageRes.status = docs.length > 0 ? 404 : 200;
+                .select(this.defaultSelectOptionSpec());
+            if (populate && populate.length > 0) {
+                for (const pop of populate) {
+                    query = query.populate(pop, this.defaultPopulationSelectSpec(pop));
+                }
+            }
+            const docs = yield query.exec();
             return docs;
         });
     }
     getCustom(filterQuery, populate) {
         return __awaiter(this, void 0, void 0, function* () {
             filterQuery = Object.assign(Object.assign({}, filterQuery), this.defaultFilterOptionSpec());
-            const doc = yield this.collection
+            let query = this.collection
                 .find(filterQuery)
-                .select(this.defaultSelectOptionSpec())
-                .populate(this.defaultPopulationExpandSpec(populate), this.defaultPopulationSelectSpec(populate))
-                .exec();
+                .select(this.defaultSelectOptionSpec());
+            if (populate && populate.length > 0) {
+                for (const pop of populate) {
+                    query = query.populate(pop, this.defaultPopulationSelectSpec(pop));
+                }
+            }
+            const doc = yield query.exec();
             return doc;
         });
     }
     get(populate) {
         return __awaiter(this, void 0, void 0, function* () {
-            const docs = yield this.collection
+            let query = this.collection
                 .find(this.defaultFilterOptionSpec())
-                .select(this.defaultSelectOptionSpec())
-                .populate(this.defaultPopulationExpandSpec(populate), this.defaultPopulationSelectSpec(populate))
-                .exec();
+                .select(this.defaultSelectOptionSpec());
+            if (populate && populate.length > 0) {
+                for (const pop of populate) {
+                    query = query.populate(pop, this.defaultPopulationSelectSpec(pop));
+                }
+            }
+            const docs = yield query.exec();
             return docs;
         });
     }
     getById(id, populate) {
         return __awaiter(this, void 0, void 0, function* () {
-            const doc = yield this.collection
+            let query = this.collection
                 .findById(id)
-                .select(this.defaultSelectOptionSpec())
-                .populate(this.defaultPopulationExpandSpec(populate), this.defaultPopulationSelectSpec(populate))
-                .exec();
+                .select(this.defaultSelectOptionSpec());
+            if (populate && populate.length > 0) {
+                for (const pop of populate) {
+                    query = query.populate(pop, this.defaultPopulationSelectSpec(pop));
+                }
+            }
+            const doc = yield query.exec();
             if (this.tenantId &&
                 doc &&
                 doc.tenant &&
